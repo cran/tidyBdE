@@ -13,7 +13,7 @@
 #' @param dates_to_parse Dates to parse
 #'
 #' @note
-#' This function is taylored for the date formatting used on this package, so
+#' This function is tailored for the date formatting used on this package, so
 #' it may fail if it is used for another datasets. See examples for checking
 #' which formats would be considered.
 #'
@@ -74,7 +74,7 @@ bde_parse_dates <- function(dates_to_parse) {
       dateformat[j] <- NA
     } else if (nchar(s2) == 4) {
       # This is just year, add day, month
-      dateformat[j] <- paste0("0112", s2)
+      dateformat[j] <- paste0("3112", s2)
     } else if (nchar(s2) == 6) {
       # Month Year, add day
       dateformat[j] <- paste0("01", s2)

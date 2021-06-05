@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Get Started with tidyBdE</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Get Started with tidyBdE</h1>
+
+
+
+<p><strong>tidyBdE</strong> is an API package that helps to retrieve data from <a href="https://www.bde.es/webbde/en/estadis/infoest/descarga_series_temporales.html">Banco de España</a>. The data is provided as <a href="https://tibble.tidyverse.org/">tibble</a> and the package tries to guess the format of every time-series (dates, characters and numbers).</p>
+<div id="search-series" class="section level2">
+<h2>Search series</h2>
+<p>Banco de España (<strong>BdE</strong>) provides several time-series, either produced by the institution itself or compiled for another sources, as <a href="https://ec.europa.eu/eurostat">Eurostat</a> or <a href="https://www.ine.es/">INE</a>.</p>
+<p>The basic entry point for searching time-series are the catalogs (<em>indexes</em>) of information. You can search any series by name:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyBdE)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Search GBP on &quot;TC&quot; (exchange rate) catalog</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>XR_GBP <span class="ot">&lt;-</span> <span class="fu">bde_catalog_search</span>(<span class="st">&quot;GBP&quot;</span>, <span class="at">catalog=</span><span class="st">&quot;TC&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>XR_GBP[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>)]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 x 2</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Numero_secuencial Descripcion_de_la_serie                                     </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               &lt;dbl&gt; &lt;chr&gt;                                                       </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1            573214 Tipo de cambio. Libras esterlinas por euro (GBP/EUR).Datos ~</span></span></code></pre></div>
+<p><strong>Note that BdE files are only provided in Spanish, for the time being</strong>, the organism is working on the English version. By now, search terms should be provided in Spanish in order to get search results.</p>
+<p>After we have found our series, we can load the series for the GBP/EUR exchange rate using the sequential number reference (<code>Numero_Secuencial</code>) as:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load tidyverse for better handling</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>time_series <span class="ot">&lt;-</span> <span class="fu">bde_series_load</span>(<span class="dv">573214</span>, <span class="at">series_label =</span> <span class="st">&quot;EUR_GBP_XR&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Date <span class="sc">&gt;=</span> <span class="st">&quot;2010-01-01&quot;</span> <span class="sc">&amp;</span> Date <span class="sc">&lt;=</span> <span class="st">&quot;2020-12-31&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span></code></pre></div>
+</div>
+<div id="plot-series" class="section level2">
+<h2>Plot series</h2>
+<p>The package also provides a custom <code>ggplot2</code> theme based on the publications of BdE:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(time_series, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> EUR_GBP_XR)) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">colour =</span> <span class="fu">bde_vivid_pal</span>()(<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;gam&quot;</span>, <span class="at">colour =</span> <span class="fu">bde_vivid_pal</span>()(<span class="dv">2</span>)[<span class="dv">2</span>]) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;EUR/GBP Exchange Rate (2010-2020)&quot;</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;%&quot;</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Source: BdE&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">&quot;2016-06-23&quot;</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">&quot;2016-06-23&quot;</span>),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> .<span class="dv">95</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&quot;Brexit&quot;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bde</span>()</span></code></pre></div>
+<p><img src="data:image/png;base64,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" width="100%" height="60%" /></p>
+<p>The package provides also several “shortcut” functions for a selection of the most relevant macroeconomic series, so there is no need to look for them in advance:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>gdp <span class="ot">&lt;-</span> <span class="fu">bde_ind_gdp_var</span>(<span class="st">&quot;values&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>gdp<span class="sc">$</span>label <span class="ot">&lt;-</span> <span class="st">&quot;GDP YoY&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>UnempRate <span class="ot">&lt;-</span> <span class="fu">bde_ind_unemployment_rate</span>(<span class="st">&quot;values&quot;</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>UnempRate<span class="sc">$</span>label <span class="ot">&lt;-</span> <span class="st">&quot;Unemployment Rate&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plotseries <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(gdp, UnempRate) <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Date <span class="sc">&gt;=</span> <span class="st">&quot;2010-01-01&quot;</span> <span class="sc">&amp;</span> Date <span class="sc">&lt;=</span> <span class="st">&quot;2019-12-31&quot;</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plotseries, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> values)) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> label)) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Spanish Economic Indicators (2010-2019)&quot;</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;%&quot;</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Source: BdE&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bde</span>() <span class="sc">+</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_bde_d</span>() <span class="co"># Custom palette on the package</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" width="100%" height="60%" /></p>
+<div id="custom-palettes" class="section level3">
+<h3>Custom palettes</h3>
+<p>Two custom palettes, based on the used by BdE on some publications are available:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load GDP Series</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>GDP <span class="ot">&lt;-</span> <span class="fu">bde_series_load</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">series_code =</span> <span class="fu">c</span>(<span class="dv">3777251</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">3777265</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">3777259</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">3777269</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">3777060</span>),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">series_label =</span> <span class="fu">c</span>(<span class="st">&quot;Agriculture&quot;</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Industry&quot;</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Construction&quot;</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Services&quot;</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Total&quot;</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Manipulate data - tidyverse style</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>GDP_all <span class="ot">&lt;-</span> GDP <span class="sc">%&gt;%</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter dates</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Date <span class="sc">&lt;=</span> <span class="st">&quot;2020-12-31&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create &#39;Other&#39; column and convert Date to year</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Other =</span> Total <span class="sc">-</span>  <span class="fu">rowSums</span>(<span class="fu">across</span>(Agriculture<span class="sc">:</span>Services)),</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">Date =</span> <span class="fu">as.numeric</span>(<span class="fu">format</span>(Date, <span class="at">format =</span> <span class="st">&quot;%Y&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sum by year</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Date) <span class="sc">%&gt;%</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(<span class="sc">-</span><span class="fu">group_cols</span>()), sum) <span class="sc">%&gt;%</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create percentage</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(Total, <span class="at">.after =</span> Other) <span class="sc">%&gt;%</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(Agriculture<span class="sc">:</span>Other, <span class="sc">~</span> .x <span class="sc">/</span> Total)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Move cols to rows for plotting</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Total) <span class="sc">%&gt;%</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(Agriculture<span class="sc">:</span>Other,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;serie&quot;</span>,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> GDP_all, <span class="fu">aes</span>(<span class="at">x =</span> Date,</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> value, </span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fill =</span> serie)) <span class="sc">+</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;stack&quot;</span>,</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>           <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>,</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_bde_d</span>(<span class="at">palette =</span> <span class="st">&quot;bde_rose_pal&quot;</span>) <span class="sc">+</span> <span class="co"># Custom palette on the package</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bde</span>() <span class="sc">+</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Spain: Gross domestic product by industry&quot;</span>,</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;%&quot;</span>,</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Source: BdE&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" width="100%" height="60%" /></p>
+</div>
+</div>
+<div id="a-note-on-caching" class="section level2">
+<h2>A note on caching</h2>
+<p>You can use <strong>tidyBdE</strong> to create your own local repository at a given local directory passing the following option:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">bde_cache_dir =</span> <span class="st">&quot;./path/to/location&quot;</span>)</span></code></pre></div>
+<p>When this option is set, <strong>tidyBdE</strong> would look for the cached file on the <code>bde_cache_dir</code> directory and it will load it, speeding up the process.</p>
+<p>It is possible to update the data (i.e. after every monthly or quarterly data release) with the following commands:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bde_catalog_update</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># On most of the functions using the option update_cache = TRUE</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bde_series_load</span>(<span class="st">&quot;SOME ID&quot;</span>, <span class="at">update_cache =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+<div id="session-info" class="section level2">
+<h2>Session Info</h2>
+<details>
+<summary>
+<strong>Details</strong>
+</summary>
+<pre><code>#&gt; R version 4.1.0 (2021-05-18)
+#&gt; Platform: x86_64-w64-mingw32/x64 (64-bit)
+#&gt; Running under: Windows 10 x64 (build 19041)
+#&gt; 
+#&gt; Matrix products: default
+#&gt; 
+#&gt; locale:
+#&gt; [1] LC_COLLATE=C                   LC_CTYPE=Spanish_Spain.1252   
+#&gt; [3] LC_MONETARY=Spanish_Spain.1252 LC_NUMERIC=C                  
+#&gt; [5] LC_TIME=Spanish_Spain.1252    
+#&gt; 
+#&gt; attached base packages:
+#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
+#&gt; 
+#&gt; other attached packages:
+#&gt;  [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.6     purrr_0.3.4    
+#&gt;  [5] readr_1.4.0     tidyr_1.1.3     tibble_3.1.2    ggplot2_3.3.3  
+#&gt;  [9] tidyverse_1.3.1 tidyBdE_0.1.1  
+#&gt; 
+#&gt; loaded via a namespace (and not attached):
+#&gt;  [1] Rcpp_1.0.6        lubridate_1.7.10  lattice_0.20-44   ps_1.6.0         
+#&gt;  [5] assertthat_0.2.1  digest_0.6.27     utf8_1.2.1        R6_2.5.0         
+#&gt;  [9] cellranger_1.1.0  backports_1.2.1   reprex_2.0.0      evaluate_0.14    
+#&gt; [13] highr_0.9         httr_1.4.2        pillar_1.6.1      rlang_0.4.11     
+#&gt; [17] readxl_1.3.1      rstudioapi_0.13   jquerylib_0.1.4   Matrix_1.3-3     
+#&gt; [21] rmarkdown_2.8     labeling_0.4.2    splines_4.1.0     munsell_0.5.0    
+#&gt; [25] broom_0.7.6       compiler_4.1.0    modelr_0.1.8      xfun_0.23        
+#&gt; [29] pkgconfig_2.0.3   mgcv_1.8-35       htmltools_0.5.1.1 tidyselect_1.1.1 
+#&gt; [33] fansi_0.5.0       crayon_1.4.1      dbplyr_2.1.1      withr_2.4.2      
+#&gt; [37] grid_4.1.0        nlme_3.1-152      jsonlite_1.7.2    gtable_0.3.0     
+#&gt; [41] lifecycle_1.0.0   DBI_1.1.1         magrittr_2.0.1    scales_1.1.1     
+#&gt; [45] cli_2.5.0         stringi_1.6.2     farver_2.1.0      fs_1.5.0         
+#&gt; [49] xml2_1.3.2        bslib_0.2.5.1     ellipsis_0.3.2    generics_0.1.0   
+#&gt; [53] vctrs_0.3.8       tools_4.1.0       glue_1.4.2        hms_1.1.0        
+#&gt; [57] yaml_2.2.1        colorspace_2.0-1  rvest_1.0.0       knitr_1.33       
+#&gt; [61] haven_2.4.1       sass_0.4.0
+#&gt; R version 4.1.0 (2021-05-18)
+#&gt; Platform: x86_64-w64-mingw32/x64 (64-bit)
+#&gt; Running under: Windows 10 x64 (build 19041)
+#&gt; 
+#&gt; Matrix products: default
+#&gt; 
+#&gt; locale:
+#&gt; [1] LC_COLLATE=C                   LC_CTYPE=Spanish_Spain.1252   
+#&gt; [3] LC_MONETARY=Spanish_Spain.1252 LC_NUMERIC=C                  
+#&gt; [5] LC_TIME=Spanish_Spain.1252    
+#&gt; 
+#&gt; attached base packages:
+#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
+#&gt; 
+#&gt; other attached packages:
+#&gt;  [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.6     purrr_0.3.4    
+#&gt;  [5] readr_1.4.0     tidyr_1.1.3     tibble_3.1.2    ggplot2_3.3.3  
+#&gt;  [9] tidyverse_1.3.1 tidyBdE_0.1.1  
+#&gt; 
+#&gt; loaded via a namespace (and not attached):
+#&gt;  [1] Rcpp_1.0.6        lubridate_1.7.10  lattice_0.20-44   ps_1.6.0         
+#&gt;  [5] assertthat_0.2.1  digest_0.6.27     utf8_1.2.1        R6_2.5.0         
+#&gt;  [9] cellranger_1.1.0  backports_1.2.1   reprex_2.0.0      evaluate_0.14    
+#&gt; [13] highr_0.9         httr_1.4.2        pillar_1.6.1      rlang_0.4.11     
+#&gt; [17] readxl_1.3.1      rstudioapi_0.13   jquerylib_0.1.4   Matrix_1.3-3     
+#&gt; [21] rmarkdown_2.8     labeling_0.4.2    splines_4.1.0     munsell_0.5.0    
+#&gt; [25] broom_0.7.6       compiler_4.1.0    modelr_0.1.8      xfun_0.23        
+#&gt; [29] pkgconfig_2.0.3   mgcv_1.8-35       htmltools_0.5.1.1 tidyselect_1.1.1 
+#&gt; [33] fansi_0.5.0       crayon_1.4.1      dbplyr_2.1.1      withr_2.4.2      
+#&gt; [37] grid_4.1.0        nlme_3.1-152      jsonlite_1.7.2    gtable_0.3.0     
+#&gt; [41] lifecycle_1.0.0   DBI_1.1.1         magrittr_2.0.1    scales_1.1.1     
+#&gt; [45] cli_2.5.0         stringi_1.6.2     farver_2.1.0      fs_1.5.0         
+#&gt; [49] xml2_1.3.2        bslib_0.2.5.1     ellipsis_0.3.2    generics_0.1.0   
+#&gt; [53] vctrs_0.3.8       tools_4.1.0       glue_1.4.2        hms_1.1.0        
+#&gt; [57] yaml_2.2.1        colorspace_2.0-1  rvest_1.0.0       knitr_1.33       
+#&gt; [61] haven_2.4.1       sass_0.4.0
+#&gt; ***
+#&gt; vignette running time:
+#&gt; Time difference of 42.1443 secs</code></pre>
+</details>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
