@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ---- include = FALSE----------------------------------------------------------------------
 
 start_time <- Sys.time()
 
@@ -8,13 +8,15 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   fig.width = 6, 
+  fig.path = "./",
   fig.height = 4,
   out.width = "100%",
   out.height = "60%"
 )
 
 
-## ----search-------------------------------------------------------------------
+
+## ----search--------------------------------------------------------------------------------
 
 library(tidyBdE)
 
@@ -24,7 +26,8 @@ XR_GBP <- bde_catalog_search("GBP", catalog="TC")
 XR_GBP[c(2,5)]
 
 
-## ----find, message=FALSE------------------------------------------------------
+
+## ----find, message=FALSE-------------------------------------------------------------------
 
 # Load tidyverse for better handling
 library(tidyverse)
@@ -34,7 +37,8 @@ time_series <- bde_series_load(573214, series_label = "EUR_GBP_XR") %>%
   drop_na()
 
 
-## ----chart, fig.asp=0.7-------------------------------------------------------
+
+## ----chart, fig.asp=0.7--------------------------------------------------------------------
 
 ggplot(time_series, aes(x = Date, y = EUR_GBP_XR)) +
   geom_line(colour = bde_vivid_pal()(1)) +
@@ -53,7 +57,8 @@ ggplot(time_series, aes(x = Date, y = EUR_GBP_XR)) +
   theme_bde()
 
 
-## ----macroseries, fig.asp=0.7-------------------------------------------------
+
+## ----macroseries, fig.asp=0.7--------------------------------------------------------------
 
 gdp <- bde_ind_gdp_var("values")
 gdp$label <- "GDP YoY"
@@ -74,7 +79,8 @@ ggplot(plotseries, aes(x = Date, y = values)) +
   scale_color_bde_d() # Custom palette on the package
 
 
-## ----gdp----------------------------------------------------------------------
+
+## ----gdp-----------------------------------------------------------------------------------
 # Load GDP Series
 
 GDP <- bde_series_load(
@@ -127,12 +133,4 @@ ggplot(data = GDP_all, aes(x = Date,
        subtitle = "%",
        caption = "Source: BdE")
 
-
-## ----session_info, echo=FALSE-------------------------------------------------
-sessionInfo()
-end_time <- Sys.time()
-sessionInfo()
-cat("***")
-cat("vignette running time:")
-end_time - start_time
 

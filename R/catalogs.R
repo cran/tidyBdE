@@ -84,12 +84,24 @@ bde_catalog_load <-
 
       # If no catalog is found or requested, update
       if (update_cache || isFALSE(file.exists(catalog_file))) {
-        bde_catalog_update(
+        result <- bde_catalog_update(
           catalog = cat_ind,
           cache_dir = cache_dir,
           verbose = verbose
         )
+
+        if (isFALSE(result)) {
+          return(invisible())
+        }
       }
+
+      # Catch error
+      r <- readLines(catalog_file)
+      if (length(r) == 0) {
+        message("File ", catalog_file, " not valid")
+        return(invisible())
+      }
+
 
       catalog_load <-
         read.csv2(
@@ -230,11 +242,12 @@ bde_catalog_update <-
       local_file <- file.path(cache_dir, catalog_file)
 
       # Download
-      bde_hlp_download(
+      result <- bde_hlp_download(
         url = full_url,
         local_file = local_file,
         verbose = verbose
       )
+      return(result)
     }
   }
 
@@ -271,41 +284,32 @@ bde_catalog_update <-
 #' # Simple search (needs to be in Spanish)
 #' # !! PIB [es] == GDP [en]
 #'
-#' PIB <- bde_catalog_search("PIB", catalog = "IE")
-#'
-#' names(PIB)[c(2, 3, 5)]
-#'
-#' PIB[c(2, 3, 5)]
+#' bde_catalog_search("PIB")
 #'
 #' # More complex - Single
-#' FRA_PIB <- bde_catalog_search("Francia(.*)PIB", catalog = "IE")
-#'
-#' FRA_PIB[c(2, 3, 5)]
+#' bde_catalog_search("Francia(.*)PIB")
 #'
 #' # Even more complex - Double
-#' FRA_ITA_DEU_PIB <-
-#'   bde_catalog_search("Francia(.*)PIB|Italia(.*)PIB|Alemania(.*)PIB",
-#'     catalog = "IE"
-#'   )
+#' bde_catalog_search("Francia(.*)PIB|Italia(.*)PIB|Alemania(.*)PIB")
 #'
-#' FRA_ITA_DEU_PIB[c(2, 3, 5)]
-#'
-#' # Search an alias: Exact match
-#' bde_catalog_search("^IE_1_1.1$")[c(2, 3, 5)]
 #'
 #' # Search a sequential code: Exact match
 #' # Note that this series (sequential code) appears on several tables
 #'
-#' bde_catalog_search("^3779313$")[c(2, 3, 5)]
+#' bde_catalog_search("^3779313$")
 #' }
 bde_catalog_search <- function(pattern, ...) {
   if (missing(pattern) || is.null(pattern) || is.na(pattern)) {
     stop("`pattern` should be a character.")
   }
 
-
   # Extract info
   catalog_search <- bde_catalog_load(...)
+
+  if (!tibble::is_tibble(catalog_search)) {
+    message("Catalogs corrupted. Try redownloading with bde_catalog_update()")
+    return(invisible())
+  }
 
   # Index lookup columns
   col_ind <- c(2, 3, 4, 5, 15)

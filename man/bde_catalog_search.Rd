@@ -44,32 +44,19 @@ the search.
 # Simple search (needs to be in Spanish)
 # !! PIB [es] == GDP [en]
 
-PIB <- bde_catalog_search("PIB", catalog = "IE")
-
-names(PIB)[c(2, 3, 5)]
-
-PIB[c(2, 3, 5)]
+bde_catalog_search("PIB")
 
 # More complex - Single
-FRA_PIB <- bde_catalog_search("Francia(.*)PIB", catalog = "IE")
-
-FRA_PIB[c(2, 3, 5)]
+bde_catalog_search("Francia(.*)PIB")
 
 # Even more complex - Double
-FRA_ITA_DEU_PIB <-
-  bde_catalog_search("Francia(.*)PIB|Italia(.*)PIB|Alemania(.*)PIB",
-    catalog = "IE"
-  )
+bde_catalog_search("Francia(.*)PIB|Italia(.*)PIB|Alemania(.*)PIB")
 
-FRA_ITA_DEU_PIB[c(2, 3, 5)]
-
-# Search an alias: Exact match
-bde_catalog_search("^IE_1_1.1$")[c(2, 3, 5)]
 
 # Search a sequential code: Exact match
 # Note that this series (sequential code) appears on several tables
 
-bde_catalog_search("^3779313$")[c(2, 3, 5)]
+bde_catalog_search("^3779313$")
 }
 }
 \seealso{
