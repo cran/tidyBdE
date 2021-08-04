@@ -1,12 +1,11 @@
 #' Load BdE catalogs
 #'
+#' Load the time-series catalogs provided by BdE.
 #' @export
 #'
 #' @concept catalog
 #'
 #' @encoding UTF-8
-#'
-#' @description Load the time-series catalogs provided by BdE.
 #'
 #' @return A tibble
 #'
@@ -17,10 +16,10 @@
 #' @param catalog A single value indicating the catalogs to be updated
 #'   or "ALL" as a shorthand. See Details
 #'
-#' @param parse_dates Logical. If TRUE the dates would be parsed using
+#' @param parse_dates Logical. If `TRUE` the dates would be parsed using
 #'  [bde_parse_dates()].
 #'
-#' @param update_cache Logical. If TRUE the requested file would be updated on
+#' @param update_cache Logical. If `TRUE` the requested file would be updated on
 #'  the `cache_dir`.
 #'
 #' @inheritParams bde_catalog_update
@@ -28,15 +27,25 @@
 #' @details
 #' Accepted values for `catalog` are:
 #'
-#' | CODE | PUBLICATION                               | UPDATE FREQUENCY | FREQUENCY  |
-#' |------|-------------------------------------------|------------------|------------|
-#' | BE   | Statistical Bulletin                      | Daily            | Monthly    |
-#' | CF   | Financial Accounts of the Spanish Economy | Quarterly        | Annual     |
-#' | IE   | Economic Indicators                       | Daily            | Monthly    |
-#' | SI   | Summary Indicators                        | Daily            | Daily      |
-#' | TC   | Exchange Rates                            | Daily            | Daily      |
-#' | TI   | Interest Rates                            | Daily            | Daily      |
-#' | PB   | Bank Lending Survey                       | Quarterly        | Quarterly  |
+#' ```{r, echo=FALSE}
+#'
+#' t <- tibble::tribble(
+#' ~CODE, ~PUBLICATION, ~UPDATEFREQUENCY, ~FREQUENCY,
+#' "BE", "Statistical Bulletin", "Daily", "Monthly",
+#' "CF", "Financial Accounts of the Spanish Economy", "Quarterly", "Annual",
+#' "IE", "Economic Indicators", "Daily", "Monthly",
+#' "SI", "Summary Indicators", "Daily", "Daily",
+#' "TC", "Exchange Rates", "Daily", "Daily",
+#' "TI", "Interest Rates", "Daily", "Daily",
+#' "PB", "Bank Lending Survey", "Quarterly", "Quarterly",
+#' )
+#'
+#' names(t) <- c("CODE","PUBLICATION", "UPDATE FREQUENCY", "FREQUENCY")
+#'
+#' knitr::kable(t)
+#'
+#'
+#' ```
 #'
 #' Use "ALL" as a shorthand for updating all the catalogs at a glance.
 #'
@@ -63,6 +72,14 @@ bde_catalog_load <-
       is.logical(parse_dates),
       is.logical(update_cache)
     )
+
+
+    # nocov start
+    if (!bde_check_access()) {
+      tbl <- bde_hlp_return_null()
+      return(tbl)
+    }
+    # nocov end
 
     # Get cache dir
     cache_dir <-
@@ -115,7 +132,25 @@ bde_catalog_load <-
       # Convert names
       # Hard-coded, problematic on checks because UTF-8 values
       # Some OS would fail if this workaround is not used
-      names_catalog <- c("Nombre_de_la_serie", "Numero_secuencial", "Alias_de_la_serie", "Nombre_del_archivo_con_los_valores_de_la_serie", "Descripcion_de_la_serie", "Tipo_de_variable", "Codigo_de_unidades", "Exponente", "Numero_de_decimales", "Descripcion_de_unidades_y_exponente", "Frecuencia_de_la_serie", "Fecha_de_la_primera_observacion", "Fecha_de_la_ultima_observacion", "Numero_de_observaciones", "Titulo_de_la_serie", "Fuente", "Notas")
+      names_catalog <- c(
+        "Nombre_de_la_serie",
+        "Numero_secuencial",
+        "Alias_de_la_serie",
+        "Nombre_del_archivo_con_los_valores_de_la_serie",
+        "Descripcion_de_la_serie",
+        "Tipo_de_variable",
+        "Codigo_de_unidades",
+        "Exponente",
+        "Numero_de_decimales",
+        "Descripcion_de_unidades_y_exponente",
+        "Frecuencia_de_la_serie",
+        "Fecha_de_la_primera_observacion",
+        "Fecha_de_la_ultima_observacion",
+        "Numero_de_observaciones",
+        "Titulo_de_la_serie",
+        "Fuente",
+        "Notas"
+      )
 
       # Rename and delete first row
       names(catalog_load) <- names_catalog
@@ -158,15 +193,15 @@ bde_catalog_load <-
 
 #' Update BdE catalogs
 #'
+#' Update the time-series catalogs provided by BdE.
+#'
 #' @export
 #'
 #' @concept catalog
 #'
 #' @encoding UTF-8
 #'
-#' @description Update the time-series catalogs provided by BdE.
-#'
-#' @return Silent. Downloads the catalog file(s) to the local machine.
+#' @return None Downloads the catalog file(s) to the local machine.
 #'
 #' @source [Time-series bulk data download](https://www.bde.es/webbde/en/estadis/infoest/descarga_series_temporales.html)
 #'
@@ -179,15 +214,24 @@ bde_catalog_load <-
 #' @details
 #' Accepted values for `catalog` are:
 #'
-#' | CODE | PUBLICATION                               | UPDATE FREQUENCY | FREQUENCY  |
-#' |------|-------------------------------------------|------------------|------------|
-#' | BE   | Statistical Bulletin                      | Daily            | Monthly    |
-#' | CF   | Financial Accounts of the Spanish Economy | Quarterly        | Annual     |
-#' | IE   | Economic Indicators                       | Daily            | Monthly    |
-#' | SI   | Summary Indicators                        | Daily            | Daily      |
-#' | TC   | Exchange Rates                            | Daily            | Daily      |
-#' | TI   | Interest Rates                            | Daily            | Daily      |
-#' | PB   | Bank Lending Survey                       | Quarterly        | Quarterly  |
+#' ```{r, echo=FALSE}
+#'
+#' t <- tibble::tribble(
+#' ~CODE, ~PUBLICATION, ~UPDATEFREQUENCY, ~FREQUENCY,
+#' "BE", "Statistical Bulletin", "Daily", "Monthly",
+#' "CF", "Financial Accounts of the Spanish Economy", "Quarterly", "Annual",
+#' "IE", "Economic Indicators", "Daily", "Monthly",
+#' "SI", "Summary Indicators", "Daily", "Daily",
+#' "TC", "Exchange Rates", "Daily", "Daily",
+#' "TI", "Interest Rates", "Daily", "Daily",
+#' "PB", "Bank Lending Survey", "Quarterly", "Quarterly",
+#' )
+#'
+#' names(t) <- c("CODE","PUBLICATION", "UPDATE FREQUENCY", "FREQUENCY")
+#'
+#' knitr::kable(t)
+#'
+#' ```
 #'
 #' Use "ALL" as a shorthand for updating all the catalogs at a glance.
 #'
@@ -208,9 +252,18 @@ bde_catalog_update <-
       is.logical(verbose)
     )
 
+    # nocov start
+    if (!bde_check_access()) {
+      tbl <- bde_hlp_return_null()
+      return(tbl)
+    }
+    # nocov end
+
+
     # Get cache dir
     cache_dir <-
       bde_hlp_cachedir(cache_dir = cache_dir, verbose = verbose)
+
 
 
     # Loop and download
@@ -253,12 +306,11 @@ bde_catalog_update <-
 
 #' Search BdE catalogs
 #'
+#' Search for keywords on the time-series catalogs.
+#'
 #' @export
 #'
 #' @concept catalog
-#'
-#' @description
-#' Search for keywords on the time-series catalogs.
 #'
 #' @return A tibble with the results of the query.
 #'
@@ -273,11 +325,11 @@ bde_catalog_update <-
 #' Spanish, for the time being. Therefore search terms should be provided
 #' in Spanish as well in order to get search results.
 #'
-#' This function uses [`grep()`][base::grep()] function for finding matches on
+#' This function uses [base::grep()] function for finding matches on
 #' the catalogs. You can pass [regular expressions][base::grep()] to broaden
 #' the search.
 #'
-#' @seealso [bde_catalog_load()], [`grep()`][base::grep()]
+#' @seealso [bde_catalog_load()], [base::grep()]
 #'
 #' @examples
 #' \donttest{
@@ -302,6 +354,13 @@ bde_catalog_search <- function(pattern, ...) {
   if (missing(pattern) || is.null(pattern) || is.na(pattern)) {
     stop("`pattern` should be a character.")
   }
+
+  # nocov start
+  if (!bde_check_access()) {
+    tbl <- bde_hlp_return_null()
+    return(tbl)
+  }
+  # nocov end
 
   # Extract info
   catalog_search <- bde_catalog_load(...)

@@ -5,22 +5,27 @@
 #' Scales to be used with the `ggplot2` package. Discrete palettes are named
 #' as `scale_*_bde_d` while continuous palettes are named `scale_*_bde_c`.
 #'
-#' @seealso [bde_vivid_pal()]
+#' @seealso [bde_vivid_pal()], [ggplot2::discrete_scale()],
+#'   [ggplot2::continuous_scale()]
 #'
 #' @concept bde_plot
 #'
 #' @export
 #'
+#' @return A `ggplot2` color scale.
+#'
 #' @rdname scales_bde
+#'
+#' @name scales_bde
 #'
 #' @param palette Name of the BdE palette to apply. One of "bde_vivid_pal",
 #'   "bde_rose_pal". See [bde_vivid_pal()] for details.
 #'
 #' @param ... Further arguments of [ggplot2::discrete_scale()] or
-#'   [ggplot2::continuous_scale()]
+#'   [ggplot2::continuous_scale()].
 #'
 scale_color_bde_d <- function(palette = "bde_vivid_pal",
-                              ...) {
+                              ...) { # nocov start
   valid_pals <- c("bde_vivid_pal", "bde_rose_pal")
 
   if (!palette %in% valid_pals) {
@@ -37,12 +42,14 @@ scale_color_bde_d <- function(palette = "bde_vivid_pal",
     palette = cols,
     ...
   )
+  # nocov end
 }
 
 #' @rdname scales_bde
+#' @name scales_bde
 #' @export
 scale_fill_bde_d <- function(palette = "bde_vivid_pal",
-                             ...) {
+                             ...) { # nocov start
   valid_pals <- c("bde_vivid_pal", "bde_rose_pal")
 
   if (!palette %in% valid_pals) {
@@ -59,13 +66,15 @@ scale_fill_bde_d <- function(palette = "bde_vivid_pal",
     palette = cols,
     ...
   )
+  # nocov end
 }
 
 
 #' @rdname scales_bde
+#' @name scales_bde
 #' @export
 scale_color_bde_c <- function(palette = "bde_vivid_pal",
-                              ...) {
+                              ...) { # nocov start
   valid_pals <- c("bde_vivid_pal", "bde_rose_pal")
 
   if (!palette %in% valid_pals) {
@@ -82,12 +91,14 @@ scale_color_bde_c <- function(palette = "bde_vivid_pal",
     palette = scales::gradient_n_pal(cols),
     ...
   )
+  # nocov end
 }
 
 #' @rdname scales_bde
+#' @name scales_bde
 #' @export
 scale_fill_bde_c <- function(palette = "bde_vivid_pal",
-                             ...) {
+                             ...) { # nocov start
   valid_pals <- c("bde_vivid_pal", "bde_rose_pal")
 
   if (!palette %in% valid_pals) {
@@ -104,4 +115,5 @@ scale_fill_bde_c <- function(palette = "bde_vivid_pal",
     palette = scales::gradient_n_pal(cols),
     ...
   )
+  # nocov end
 }

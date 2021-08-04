@@ -233,3 +233,54 @@ bde_hlp_todouble <- function(tbl, preserve = "") {
   }
   return(tbl)
 }
+
+#' Check access to BdE
+#'
+#'
+#' @description
+#' Check if R has access to resources at
+#' <https://www.bde.es/webbde/en/estadis/infoest/descarga_series_temporales.html>.
+#'
+#' @return a logical.
+#'
+#' @examples
+#'
+#' bde_check_access()
+#' @noRd
+bde_check_access <- function() {
+  url <- paste0(
+    "https://www.bde.es/webbde/es/",
+    "estadis/infoest/series/catalogo_ie.csv"
+  )
+  # nocov start
+  access <-
+    tryCatch(
+      download.file(url, destfile = tempfile(), quiet = TRUE),
+      warning = function(e) {
+        return(FALSE)
+      }
+    )
+
+  if (isFALSE(access)) {
+    return(FALSE)
+  } else {
+    return(TRUE)
+  }
+  # nocov end
+}
+
+
+#' Return empty tibble
+#' @return a tibble.
+#'
+#' @examples
+#'
+#' bde_hlp_return_null()
+#' @noRd
+bde_hlp_return_null <- function() {
+  # nocov start
+  message("Offline. Returning an empty tibble")
+  tbl <- tibble::tibble(x = NULL)
+  return(tbl)
+  # nocov end
+}

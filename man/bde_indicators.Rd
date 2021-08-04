@@ -8,6 +8,8 @@
 \alias{bde_ind_euribor_12m_daily}
 \alias{bde_ind_cpi_var}
 \alias{bde_ind_ibex}
+\alias{bde_ind_gdp_quarterly}
+\alias{bde_ind_population}
 \title{Relevant Indicators of Spain}
 \usage{
 bde_ind_gdp_var(series_label = "GDP_YoY", ...)
@@ -21,6 +23,10 @@ bde_ind_euribor_12m_daily(series_label = "Euribor_12M_Daily", ...)
 bde_ind_cpi_var(series_label = "Consumer_price_index_YoY", ...)
 
 bde_ind_ibex(series_label = "IBEX_index_month", ...)
+
+bde_ind_gdp_quarterly(series_label = "GDP_quarterly_value", ...)
+
+bde_ind_population(series_label = "Population_Spain", ...)
 }
 \arguments{
 \item{series_label}{Optional. Character vector or value. Allows to specify a
@@ -30,16 +36,16 @@ custom label for the series extracted. It should have the same length than
 \item{...}{
   Arguments passed on to \code{\link[=bde_series_load]{bde_series_load}}
   \describe{
-    \item{\code{parse_dates}}{Logical. If TRUE the dates would be parsed using
+    \item{\code{parse_dates}}{Logical. If \code{TRUE} the dates would be parsed using
 \code{\link[=bde_parse_dates]{bde_parse_dates()}}.}
-    \item{\code{parse_numeric}}{Logical. If TRUE the columns would be parsed to double
-(numeric) values. See Note.}
+    \item{\code{parse_numeric}}{Logical. If \code{TRUE} the columns would be parsed to
+double (numeric) values. See Note.}
     \item{\code{cache_dir}}{A path to a cache directory. The directory can also be set
 via options with \code{options(bde_cache_dir = "path/to/dir")}.}
-    \item{\code{update_cache}}{Logical. If TRUE the requested file would be updated on
+    \item{\code{update_cache}}{Logical. If \code{TRUE} the requested file would be updated on
 the \code{cache_dir}.}
     \item{\code{verbose}}{Logical, display information useful for debugging.}
-    \item{\code{extract_metadata}}{Logical TRUE/FALSE. On TRUE the output is the
+    \item{\code{extract_metadata}}{Logical \code{TRUE/FALSE}. On \code{TRUE} the output is the
 metadata of the requested series.}
   }}
 }
@@ -52,8 +58,8 @@ macroeconomic indicators of Spain.
 }
 \details{
 This functions are convenient wrappers of \code{\link[=bde_series_load]{bde_series_load()}} referencing
-specific series. Use \code{verbose = TRUE/extract_metadata = TRUE} to see the
-specification and the source.
+specific series. Use \verb{verbose = TRUE, extract_metadata = TRUE} options
+to see the specification and the source.
 }
 \examples{
 \donttest{

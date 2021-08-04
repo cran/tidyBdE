@@ -1,4 +1,4 @@
-## ---- include = FALSE----------------------------------------------------------------------
+## ---- include = FALSE------------------------------------------------------------------
 
 start_time <- Sys.time()
 
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 
 
-## ----search--------------------------------------------------------------------------------
+## ----search----------------------------------------------------------------------------
 
 library(tidyBdE)
 
@@ -27,7 +27,7 @@ XR_GBP[c(2,5)]
 
 
 
-## ----find, message=FALSE-------------------------------------------------------------------
+## ----find, message=FALSE---------------------------------------------------------------
 
 # Load tidyverse for better handling
 library(tidyverse)
@@ -38,7 +38,7 @@ time_series <- bde_series_load(573214, series_label = "EUR_GBP_XR") %>%
 
 
 
-## ----chart, fig.asp=0.7--------------------------------------------------------------------
+## ----chart, fig.asp=0.7----------------------------------------------------------------
 
 ggplot(time_series, aes(x = Date, y = EUR_GBP_XR)) +
   geom_line(colour = bde_vivid_pal()(1)) +
@@ -58,7 +58,7 @@ ggplot(time_series, aes(x = Date, y = EUR_GBP_XR)) +
 
 
 
-## ----macroseries, fig.asp=0.7--------------------------------------------------------------
+## ----macroseries, fig.asp=0.7----------------------------------------------------------
 
 gdp <- bde_ind_gdp_var("values")
 gdp$label <- "GDP YoY"
@@ -80,7 +80,7 @@ ggplot(plotseries, aes(x = Date, y = values)) +
 
 
 
-## ----gdp-----------------------------------------------------------------------------------
+## ----gdp-------------------------------------------------------------------------------
 # Load GDP Series
 
 GDP <- bde_series_load(
@@ -110,7 +110,7 @@ GDP_all <- GDP %>%
   summarise_at(vars(-group_cols()), sum) %>%
   # Create percentage
   relocate(Total, .after = Other) %>%
-  mutate(across(Agriculture:Other, ~ .x / Total)) %>%
+  mutate(across(Agriculture:Other, ~ .x * 100 / Total)) %>%
   # Move cols to rows for plotting
   select(-Total) %>%
   pivot_longer(Agriculture:Other,

@@ -1,10 +1,9 @@
+test_that("Indicators", {
+  skip_if_not(
+    tidyBdE:::bde_check_access(),
+    "Skipping... BdE not reachable."
+  )
 
-
-run_tests <-
-  length(unclass(utils::packageVersion("tidyBdE"))[[1]]) > 3
-
-
-if (run_tests) {
   # Test indicators----
   expect_silent(bde_ind_gdp_var())
   expect_silent(bde_ind_unemployment_rate())
@@ -12,4 +11,6 @@ if (run_tests) {
   expect_silent(bde_ind_euribor_12m_daily())
   expect_silent(bde_ind_cpi_var())
   expect_silent(bde_ind_ibex())
-}
+  expect_silent(bde_ind_gdp_quarterly())
+  expect_silent(bde_ind_population())
+})

@@ -8,12 +8,15 @@
 [![rOS-badge](https://ropenspain.github.io/rostemplate/reference/figures/ropenspain-badge.svg)](https://ropenspain.es/)
 [![CRAN-status](https://www.r-pkg.org/badges/version/tidyBdE)](https://CRAN.R-project.org/package=tidyBdE)
 [![CRAN-results](https://cranchecks.info/badges/worst/tidyBdE)](https://cran.r-project.org/web/checks/check_results_tidyBdE.html)
+[![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/tidyBdE?color=blue)](https://cran.r-project.org/package=tidyBdE)
 [![On-CRAN](https://www.r-pkg.org/badges/ago/tidyBdE)](https://cran.r-project.org/web/checks/check_results_tidyBdE.html)
+[![r-universe](https://ropenspain.r-universe.dev/badges/tidyBdE)](https://ropenspain.r-universe.dev/)
 [![R-CMD-check](https://github.com/rOpenSpain/tidyBdE/actions/workflows/check-full.yaml/badge.svg)](https://github.com/rOpenSpain/tidyBdE/actions/workflows/check-full.yaml)
 [![codecov](https://codecov.io/gh/ropenspain/tidyBdE/branch/main/graph/badge.svg)](https://codecov.io/gh/ropenspain/tidyBdE)
-![GitHub-version](https://img.shields.io/github/r-package/v/ropenspain/tidyBdE?label=dev)
 [![DOI](https://img.shields.io/badge/DOI-10.5281/zenodo.4673496-blue)](https://doi.org/10.5281/zenodo.4673496)
-[![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/tidyBdE?color=blue)](https://cran.r-project.org/package=tidyBdE)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 <!-- badges: end -->
 
@@ -38,6 +41,20 @@ You can install the developing version of **tidyBdE** with:
 library(remotes)
 
 install_github("ropenspain/tidyBdE")
+```
+
+Alternatively, you can install the developing version of `tidyBdE` using
+the [r-universe](https://ropenspain.r-universe.dev/ui#builds):
+
+``` r
+# Enable this universe
+options(repos = c(
+  ropenspain = "https://ropenspain.r-universe.dev",
+  CRAN = "https://cloud.r-project.org"
+))
+
+# Install tidyBdE
+install.packages("tidyBdE")
 ```
 
 ## Examples
@@ -194,7 +211,7 @@ GDP_all <- GDP %>%
   summarise_at(vars(-group_cols()), sum) %>%
   # Create percentage
   relocate(Total, .after = Other) %>%
-  mutate(across(Agriculture:Other, ~ .x / Total)) %>%
+  mutate(across(Agriculture:Other, ~ .x * 100 / Total)) %>%
   # Move cols to rows for plotting
   select(-Total) %>%
   pivot_longer(Agriculture:Other,
@@ -268,3 +285,26 @@ Other useful packages that provides access to Spanish open data:
 
 This package is in no way sponsored endorsed or administered by Banco de
 España.
+
+## Citation
+
+``` r
+citation("tidyBdE")
+#> 
+#> To cite tidyBdE in publications use:
+#> 
+#>   Herrero, D. H. (2021). tidyBdE: Download Data from Bank of Spain. R
+#>   package version 0.2.0. https://doi.org/10.5281/zenodo.4673496.
+#>   Package url: https://CRAN.R-project.org/package=tidyBdE
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {tidyBdE: Download Data from Bank of Spain},
+#>     author = {D. H. Herrero},
+#>     year = {2021},
+#>     note = {R package version 0.2.0},
+#>     doi = {10.5281/zenodo.4673496},
+#>     url = {https://CRAN.R-project.org/package=tidyBdE},
+#>   }
+```
