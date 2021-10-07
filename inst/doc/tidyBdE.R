@@ -1,44 +1,67 @@
-## ---- include = FALSE------------------------------------------------------------------
+## ---- include = FALSE----------------------------------------------------------------------------
 
 start_time <- Sys.time()
 
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  tidy = "styler",
   warning = FALSE,
   message = FALSE,
-  fig.width = 6, 
+  dpi = 300,
+  dev = "ragg_png",
   fig.path = "./",
-  fig.height = 4,
-  out.width = "100%",
-  out.height = "60%"
+  out.width = "100%"
 )
 
 
 
-## ----search----------------------------------------------------------------------------
+## ----search, message = FALSE---------------------------------------------------------------------
 
 library(tidyBdE)
-
-# Search GBP on "TC" (exchange rate) catalog
-XR_GBP <- bde_catalog_search("GBP", catalog="TC")
-
-XR_GBP[c(2,5)]
-
-
-
-## ----find, message=FALSE---------------------------------------------------------------
 
 # Load tidyverse for better handling
 library(tidyverse)
 
-time_series <- bde_series_load(573214, series_label = "EUR_GBP_XR") %>%
+
+# Search GBP on "TC" (exchange rate) catalog
+XR_GBP <- bde_catalog_search("GBP", catalog="TC")
+
+XR_GBP %>% 
+  select(Numero_secuencial, Descripcion_de_la_serie) %>%
+  # To table on document 
+  knitr::kable()
+  
+
+
+
+## ----find----------------------------------------------------------------------------------------
+
+seq_number <- XR_GBP %>%
+  # First record
+  slice(1) %>%
+  # Get id
+  select(Numero_secuencial) %>%
+  # Convert to num
+  as.double()
+
+
+seq_number
+
+# We can check the metadata of the series
+seq_number %>% 
+  bde_series_load(extract_metadata = TRUE) %>%
+ # To nice table for the vignette
+  knitr::kable()
+
+
+time_series <- bde_series_load(seq_number, series_label = "EUR_GBP_XR") %>%
   filter(Date >= "2010-01-01" & Date <= "2020-12-31") %>%
   drop_na()
 
 
 
-## ----chart, fig.asp=0.7----------------------------------------------------------------
+## ----chart, fig.asp=0.7--------------------------------------------------------------------------
 
 ggplot(time_series, aes(x = Date, y = EUR_GBP_XR)) +
   geom_line(colour = bde_vivid_pal()(1)) +
@@ -58,7 +81,7 @@ ggplot(time_series, aes(x = Date, y = EUR_GBP_XR)) +
 
 
 
-## ----macroseries, fig.asp=0.7----------------------------------------------------------
+## ----macroseries, fig.asp=0.7--------------------------------------------------------------------
 
 gdp <- bde_ind_gdp_var("values")
 gdp$label <- "GDP YoY"
@@ -80,7 +103,7 @@ ggplot(plotseries, aes(x = Date, y = values)) +
 
 
 
-## ----gdp-------------------------------------------------------------------------------
+## ----gdp-----------------------------------------------------------------------------------------
 # Load GDP Series
 
 GDP <- bde_series_load(
@@ -133,4 +156,16 @@ ggplot(data = GDP_all, aes(x = Date,
        subtitle = "%",
        caption = "Source: BdE")
 
+
+
+## ---- eval=FALSE---------------------------------------------------------------------------------
+#> options(bde_cache_dir = "./path/to/location")
+
+
+## ---- eval=FALSE---------------------------------------------------------------------------------
+#> bde_catalog_update()
+#> 
+#> # On most of the functions using the option update_cache = TRUE
+#> 
+#> bde_series_load("SOME ID", update_cache = TRUE)
 

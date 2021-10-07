@@ -4,14 +4,14 @@
 #'
 #' @export
 #'
-#' @concept series
+#' @family series
 #'
 #'
 #' @encoding UTF-8
 #'
-#' @param series_code a numeric value or vector with time-series code(s), as
-#'   defined in the field `Número secuencial` of the corresponding
-#'   series. See [bde_catalog_load()].
+#' @param series_code a numeric (or coercible with [base::as.double()] value
+#'   or vector with time-series code(s), as defined in the field
+#'   `Número secuencial` of the corresponding series. See [bde_catalog_load()].
 #'
 #' @param series_label Optional. Character vector or value. Allows to specify a
 #'   custom label for the series extracted. It should have the same length than
@@ -43,10 +43,10 @@
 #' warning may be displayed if the parser fails. You can override the default
 #' behavior with `parse_numeric = FALSE`
 #'
-#' @seealso [bde_series_full_load()], [bde_catalog_load()],
-#' [bde_catalog_search()]
+#' @seealso [bde_catalog_load()],
+#' [bde_catalog_search()], [bde_indicators()]
 #'
-#' @examples
+#' @examplesIf bde_check_access()
 #' \donttest{
 #' # Metadata
 #' bde_series_load(573234, verbose = TRUE, extract_metadata = TRUE)
@@ -74,11 +74,13 @@ bde_series_load <- function(series_code,
                             update_cache = FALSE,
                             verbose = FALSE,
                             extract_metadata = FALSE) {
-  if (missing(series_code) || !is.numeric(series_code)) {
-    stop("`series_code` must be numeric.")
+  if (missing(series_code)) {
+    stop("`series_code` can't be NULL")
   }
 
-  series_code <- unique(series_code)
+  series_code <- as.double(series_code)
+  # Remove NAs
+  series_code <- series_code[!is.na(series_code)]
 
   if (is.null(series_label)) {
     series_label <- as.character(series_code)
@@ -144,9 +146,28 @@ bde_series_load <- function(series_code,
       update_cache = update_cache,
       verbose = verbose,
       extract_metadata = extract_metadata
-    )[c("Date", alias_serie)]
+    )
 
+
+    if (!(alias_serie %in% names(serie_file))) {
+      if (verbose) {
+        message(
+          "tidyBdE> ",
+          "Serie with alias '",
+          alias_serie,
+          "' not available on ",
+          csv_file_name, ". ",
+          "Returning col with NA"
+        )
+      }
+
+      serie_file <- serie_file["Date"]
+      serie_file <- tibble::add_column(serie_file, x = NA)
+    } else {
+      serie_file <- serie_file[c("Date", alias_serie)]
+    }
     names(serie_file) <- c("Date", as.character(series_label[i]))
+
 
     # Append to final object
     if (!exists("collate_data")) {
@@ -165,10 +186,6 @@ bde_series_load <- function(series_code,
 
 #' Load BdE full time-series files
 #'
-#' @export
-#'
-#'
-#' @description
 #' Load a full time-series file provided by BdE.
 #'
 #' ## About BdE file naming
@@ -181,9 +198,11 @@ bde_series_load <- function(series_code,
 #' For that reason, the function [bde_series_load()] is more suitable for
 #' extracting specific time-series.
 #'
-#' @concept series
 #'
-#' @seealso [bde_series_load()]
+#' @export
+#'
+#' @family series
+#'
 #'
 #' @encoding UTF-8
 #'
@@ -194,7 +213,7 @@ bde_series_load <- function(series_code,
 #' @inheritParams bde_catalog_load
 #'
 #' @param parse_numeric Logical. If `TRUE` the columns would be parsed to
-#'   double (numeric) values. See Note.
+#'   double (numeric) values. See **Note**.
 #'
 #' @param extract_metadata Logical `TRUE/FALSE`. On `TRUE` the output is the
 #'   metadata of the requested series.
@@ -207,7 +226,7 @@ bde_series_load <- function(series_code,
 #' warning may be displayed if the parser fails. You can override the default
 #' behavior with `parse_numeric = FALSE`
 #'
-#' @examples
+#' @examplesIf bde_check_access()
 #' \donttest{
 #' # Metadata
 #' bde_series_full_load("TI_1_1.csv", extract_metadata = TRUE)

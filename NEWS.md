@@ -1,3 +1,11 @@
+# tidyBdE 0.2.1
+
+-   Update docs and vignettes.
+-   `bde_series_load()` now tries to coerce characters to numeric.
+-   Improve messages when inconsistencies between catalog and series.
+-   Export `bde_check_access()`.
+
+
 # tidyBdE 0.2.0
 -   Add series index article.
 -   Add new series: `bde_ind_gdp_quarterly()`, `bde_ind_population()`.

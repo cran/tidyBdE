@@ -8,7 +8,7 @@
 #' @seealso [bde_vivid_pal()], [ggplot2::discrete_scale()],
 #'   [ggplot2::continuous_scale()]
 #'
-#' @concept bde_plot
+#' @family bde_plot
 #'
 #' @export
 #'
@@ -19,7 +19,7 @@
 #' @name scales_bde
 #'
 #' @param palette Name of the BdE palette to apply. One of "bde_vivid_pal",
-#'   "bde_rose_pal". See [bde_vivid_pal()] for details.
+#'   "bde_rose_pal". See [bde_pals()] for details.
 #'
 #' @param ... Further arguments of [ggplot2::discrete_scale()] or
 #'   [ggplot2::continuous_scale()].

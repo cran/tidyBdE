@@ -18,7 +18,7 @@ bde_catalog_load(
 }
 \arguments{
 \item{catalog}{A single value indicating the catalogs to be updated
-or "ALL" as a shorthand. See Details}
+or \code{"ALL"} as a shorthand. See \strong{Details}.}
 
 \item{parse_dates}{Logical. If \code{TRUE} the dates would be parsed using
 \code{\link[=bde_parse_dates]{bde_parse_dates()}}.}
@@ -29,7 +29,8 @@ via options with \code{options(bde_cache_dir = "path/to/dir")}.}
 \item{update_cache}{Logical. If \code{TRUE} the requested file would be updated on
 the \code{cache_dir}.}
 
-\item{verbose}{Logical, display information useful for debugging.}
+\item{verbose}{Logical \code{TRUE} or \code{FALSE}, display information useful for
+debugging.}
 }
 \value{
 A tibble
@@ -50,16 +51,20 @@ Accepted values for \code{catalog} are:\tabular{llll}{
 }
 
 
-Use "ALL" as a shorthand for updating all the catalogs at a glance.
+Use \code{"ALL"} as a shorthand for updating all the catalogs at a glance.
 
 If the requested catalog is not cached \code{\link[=bde_catalog_update]{bde_catalog_update()}} is invoked.
 }
 \examples{
+\dontshow{if (bde_check_access()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 bde_catalog_load("TI", verbose = TRUE)
 }
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=bde_catalog_update]{bde_catalog_update()}}
+Other catalog: 
+\code{\link{bde_catalog_search}()},
+\code{\link{bde_catalog_update}()}
 }
 \concept{catalog}

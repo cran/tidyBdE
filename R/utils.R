@@ -1,10 +1,10 @@
 #' Parse dates
 #'
+#' Tries to parse strings representing dates using [as.Date()]
+#'
 #' @export
 #'
-#' @concept utils
-#'
-#' @description Tries to parse strings representing dates using [as.Date()]
+#' @family utils
 #'
 #' @return A class "Date" object.
 #'
@@ -14,8 +14,8 @@
 #'
 #' @note
 #' This function is tailored for the date formatting used on this package, so
-#' it may fail if it is used for another datasets. See examples for checking
-#' which formats would be considered.
+#' it may fail if it is used for another datasets. See **Examples** for
+#' checking which formats would be considered.
 #'
 #' @examples
 #' # Formats parsed
@@ -161,15 +161,36 @@ bde_hlp_download <- function(url, local_file, verbose) {
     ),
     # nocov start
     warning = function(e) {
-      message(
-        "tidyBdE> URL \n ",
-        url,
-        "\nnot reachable.\n\n",
-        "If you think this is a bug consider opening an issue"
-      )
       return(TRUE)
     }
   )
+
+  # Try again if not working
+  # This time display a message
+
+  # nocov start
+  if (isTRUE(err_dwnload)) {
+    if (verbose) message("tidyBdE> Trying again")
+
+    err_dwnload <- tryCatch(
+      download.file(url,
+        local_file,
+        quiet = isFALSE(verbose),
+        mode = "wb"
+      ),
+      # nocov start
+      warning = function(e) {
+        message(
+          "tidyBdE> URL \n ",
+          url,
+          "\nnot reachable.\n\n",
+          "If you think this is a bug consider opening an issue"
+        )
+        return(TRUE)
+      }
+    )
+  }
+  # nocov end
 
   # On warning stop the execution
   if (isTRUE(err_dwnload)) {
@@ -243,10 +264,13 @@ bde_hlp_todouble <- function(tbl, preserve = "") {
 #'
 #' @return a logical.
 #'
-#' @examples
+#' @family utils
 #'
+#' @examples
+#' \donttest{
 #' bde_check_access()
-#' @noRd
+#' }
+#' @export
 bde_check_access <- function() {
   url <- paste0(
     "https://www.bde.es/webbde/es/",
@@ -269,6 +293,20 @@ bde_check_access <- function() {
   # nocov end
 }
 
+#' Skip tests
+#' @noRd
+skip_if_bde_offline <- function() {
+  # nocov start
+  if (bde_check_access()) {
+    return(invisible(TRUE))
+  }
+
+  if (requireNamespace("testthat", quietly = TRUE)) {
+    testthat::skip("tidyBdE> BdE API not reachable")
+  }
+  return(invisible())
+  # nocov end
+}
 
 #' Return empty tibble
 #' @return a tibble.
@@ -277,9 +315,9 @@ bde_check_access <- function() {
 #'
 #' bde_hlp_return_null()
 #' @noRd
-bde_hlp_return_null <- function() {
+bde_hlp_return_null <- function(msg = "Offline. Returning an empty tibble") {
   # nocov start
-  message("Offline. Returning an empty tibble")
+  message(paste0("tidyBdE> ", msg))
   tbl <- tibble::tibble(x = NULL)
   return(tbl)
   # nocov end

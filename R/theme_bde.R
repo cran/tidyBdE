@@ -2,17 +2,17 @@
 #'
 #' A custom `ggplot2` theme based on the publications of BdE.
 #'
-#' @concept bde_plot
+#' @family bde_plot
 #'
 #' @export
 #'
-#' @return A [`ggplot2::theme()`].
+#' @return A [ggplot2::theme()].
 #'
 #' @param ... Ignored.
 #'
-#' @seealso [`ggplot2::theme()`]
+#' @seealso [ggplot2::theme()]
 #'
-#' @examples
+#' @examplesIf bde_check_access()
 #' \donttest{
 #' library(tidyverse)
 #'

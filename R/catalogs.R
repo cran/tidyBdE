@@ -3,18 +3,17 @@
 #' Load the time-series catalogs provided by BdE.
 #' @export
 #'
-#' @concept catalog
+#' @family catalog
 #'
 #' @encoding UTF-8
 #'
 #' @return A tibble
 #'
-#' @seealso [bde_catalog_update()]
 #'
 #' @source [Time-series bulk data download](https://www.bde.es/webbde/en/estadis/infoest/descarga_series_temporales.html)
 #'
 #' @param catalog A single value indicating the catalogs to be updated
-#'   or "ALL" as a shorthand. See Details
+#'   or `"ALL"` as a shorthand. See **Details**.
 #'
 #' @param parse_dates Logical. If `TRUE` the dates would be parsed using
 #'  [bde_parse_dates()].
@@ -47,11 +46,11 @@
 #'
 #' ```
 #'
-#' Use "ALL" as a shorthand for updating all the catalogs at a glance.
+#' Use `"ALL"` as a shorthand for updating all the catalogs at a glance.
 #'
 #' If the requested catalog is not cached [bde_catalog_update()] is invoked.
 #'
-#' @examples
+#' @examplesIf bde_check_access()
 #' \donttest{
 #' bde_catalog_load("TI", verbose = TRUE)
 #' }
@@ -197,7 +196,7 @@ bde_catalog_load <-
 #'
 #' @export
 #'
-#' @concept catalog
+#' @family catalog
 #'
 #' @encoding UTF-8
 #'
@@ -206,10 +205,12 @@ bde_catalog_load <-
 #' @source [Time-series bulk data download](https://www.bde.es/webbde/en/estadis/infoest/descarga_series_temporales.html)
 #'
 #' @param catalog A vector of characters indicating the catalogs to be updated
-#'   or "ALL" as a shorthand. See Details
+#'   or `"ALL"` as a shorthand. See **Details**.
+#'
 #' @param cache_dir A path to a cache directory. The directory can also be set
 #'   via options with `options(bde_cache_dir = "path/to/dir")`.
-#' @param verbose Logical, display information useful for debugging.
+#' @param verbose Logical `TRUE` or `FALSE`, display information useful for
+#'   debugging.
 #'
 #' @details
 #' Accepted values for `catalog` are:
@@ -233,9 +234,9 @@ bde_catalog_load <-
 #'
 #' ```
 #'
-#' Use "ALL" as a shorthand for updating all the catalogs at a glance.
+#' Use `"ALL"` as a shorthand for updating all the catalogs at a glance.
 #'
-#' @examples
+#' @examplesIf bde_check_access()
 #' \donttest{
 #' bde_catalog_update("TI", verbose = TRUE)
 #' }
@@ -310,11 +311,12 @@ bde_catalog_update <-
 #'
 #' @export
 #'
-#' @concept catalog
+#' @family  catalog
 #'
 #' @return A tibble with the results of the query.
 #'
-#' @param pattern regex pattern to search See Details and Examples.
+#' @param pattern [`regex`][base::grep()]  pattern to search See
+#'   **Details** and **Examples**.
 #'
 #' @inheritDotParams bde_catalog_load
 #'
@@ -325,13 +327,13 @@ bde_catalog_update <-
 #' Spanish, for the time being. Therefore search terms should be provided
 #' in Spanish as well in order to get search results.
 #'
-#' This function uses [base::grep()] function for finding matches on
-#' the catalogs. You can pass [regular expressions][base::grep()] to broaden
+#' This function uses [base::regex()] function for finding matches on
+#' the catalogs. You can pass [regular expressions][base::regex()] to broaden
 #' the search.
 #'
-#' @seealso [bde_catalog_load()], [base::grep()]
+#' @seealso [bde_catalog_load()], [base::regex()]
 #'
-#' @examples
+#' @examplesIf bde_check_access()
 #' \donttest{
 #' # Simple search (needs to be in Spanish)
 #' # !! PIB [es] == GDP [en]

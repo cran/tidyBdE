@@ -43,8 +43,8 @@ library(remotes)
 install_github("ropenspain/tidyBdE")
 ```
 
-Alternatively, you can install the developing version of `tidyBdE` using
-the [r-universe](https://ropenspain.r-universe.dev/ui#builds):
+Alternatively, you can install the developing version of **tidyBdE**
+using the [r-universe](https://ropenspain.r-universe.dev/ui#builds):
 
 ``` r
 # Enable this universe
@@ -69,15 +69,22 @@ The basic entry point for searching time-series are the catalogs
 ``` r
 library(tidyBdE)
 
+# Load tidyverse for better handling
+library(tidyverse)
+
+
 # Search GBP on "TC" (exchange rate) catalog
 XR_GBP <- bde_catalog_search("GBP", catalog = "TC")
 
-XR_GBP[c(2, 5)]
-#> # A tibble: 1 x 2
-#>   Numero_secuencial Descripcion_de_la_serie                                     
-#>               <dbl> <chr>                                                       
-#> 1            573214 Tipo de cambio. Libras esterlinas por euro (GBP/EUR).Datos ~
+XR_GBP %>%
+  select(Numero_secuencial, Descripcion_de_la_serie) %>%
+  # To table on document
+  knitr::kable()
 ```
+
+| Numero\_secuencial | Descripcion\_de\_la\_serie                                         |
+|-------------------:|:-------------------------------------------------------------------|
+|             573214 | Tipo de cambio. Libras esterlinas por euro (GBP/EUR).Datos diarios |
 
 **Note that BdE files are only provided in Spanish, for the time
 being**, the organism is working on the English version. By now, search
@@ -88,13 +95,38 @@ exchange rate using the sequential number reference
 (`Numero_Secuencial`) as:
 
 ``` r
-# Load tidyverse for better handling
-library(tidyverse)
 
-time_series <- bde_series_load(573214, series_label = "EUR_GBP_XR") %>%
+seq_number <- XR_GBP %>%
+  # First record
+  slice(1) %>%
+  # Get id
+  select(Numero_secuencial) %>%
+  # Convert to num
+  as.double()
+
+# Load metadata
+bde_series_load(seq_number, extract_metadata = TRUE) %>%
+  # To table on the vignette
+  knitr::kable()
+```
+
+| Date                        | 573214                                                             |
+|:----------------------------|:-------------------------------------------------------------------|
+| NOMBRE DE LA SERIE          | DTCCBCEGBPEUR.B                                                    |
+| NÚMERO SECUENCIAL           | 573214                                                             |
+| ALIAS DE LA SERIE           | TC\_1\_1.4                                                         |
+| DESCRIPCIÓN DE LA SERIE     | Tipo de cambio. Libras esterlinas por euro (GBP/EUR).Datos diarios |
+| DESCRIPCIÓN DE LAS UNIDADES | Libras esterlinas por Euro                                         |
+| FRECUENCIA                  | LABORABLE                                                          |
+
+``` r
+# Extract series
+time_series <- bde_series_load(seq_number, series_label = "EUR_GBP_XR") %>%
   filter(Date >= "2010-01-01" & Date <= "2020-12-31") %>%
   drop_na()
 ```
+
+### Plots
 
 The package also provides a custom `ggplot2` theme based on the
 publications of BdE:
@@ -152,24 +184,23 @@ ggplot(plotseries, aes(x = Date, y = values)) +
 
 <img src="man/figures/README-macroseries-1.png" width="100%" />
 
+### Palettes
+
 Two custom palettes, based on the used by BdE on some publications are
 available.
 
 ``` r
-opar <- par(no.readonly = TRUE)
 
-par(mfrow = c(1, 2))
 scales::show_col(bde_rose_pal()(6))
-title("bde_rose_pal()")
-scales::show_col(bde_vivid_pal()(6))
-title("bde_vivid_pal()")
 ```
 
 <img src="man/figures/README-palettes-1.png" width="100%" />
 
 ``` r
-par(opar)
+scales::show_col(bde_vivid_pal()(6))
 ```
+
+<img src="man/figures/README-palettes-2.png" width="100%" />
 
 Those palettes can be applied to a `ggplot2` using some custom utils
 included on the package (see
@@ -291,20 +322,20 @@ España.
 ``` r
 citation("tidyBdE")
 #> 
-#> To cite tidyBdE in publications use:
+#> To cite the 'tidyBdE' package in publications use:
 #> 
-#>   Herrero, D. H. (2021). tidyBdE: Download Data from Bank of Spain. R
-#>   package version 0.2.0. https://doi.org/10.5281/zenodo.4673496.
-#>   Package url: https://CRAN.R-project.org/package=tidyBdE
+#> H. Herrero D (2021). _tidyBdE: Download Data from Bank of Spain_. doi:
+#> 10.5281/zenodo.4673496 (URL: https://doi.org/10.5281/zenodo.4673496), R
+#> package version 0.2.1, <URL: https://ropenspain.github.io/tidyBdE/>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
 #>     title = {tidyBdE: Download Data from Bank of Spain},
-#>     author = {D. H. Herrero},
+#>     author = {Diego {H. Herrero}},
 #>     year = {2021},
-#>     note = {R package version 0.2.0},
+#>     note = {R package version 0.2.1},
+#>     url = {https://ropenspain.github.io/tidyBdE/},
 #>     doi = {10.5281/zenodo.4673496},
-#>     url = {https://CRAN.R-project.org/package=tidyBdE},
 #>   }
 ```

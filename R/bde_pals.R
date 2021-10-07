@@ -2,7 +2,7 @@
 #'
 #' Custom palettes based on the publications of BdE.
 #'
-#' @concept bde_plot
+#' @family bde_plot
 #'
 #' @rdname bde_pals
 #' @name bde_pals
@@ -13,7 +13,7 @@
 #'
 #' @param ... Further arguments of the functions.
 #'
-#' @seealso [theme_bde()]
+#'
 #'
 #' @examples
 #'
@@ -29,7 +29,7 @@ bde_vivid_pal <- function(...) { # nocov start
 }
 
 #' @rdname bde_pals
-#' @name bde_pals
+#'
 #' @export
 bde_rose_pal <- function(...) { # nocov start
   pal <- c("#b7365c", "#cb6e8a", "#db9aad", "#0a50a1", "#5385bd", "#89AEDA")
