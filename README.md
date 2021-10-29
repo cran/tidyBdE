@@ -12,7 +12,7 @@
 [![On-CRAN](https://www.r-pkg.org/badges/ago/tidyBdE)](https://cran.r-project.org/web/checks/check_results_tidyBdE.html)
 [![r-universe](https://ropenspain.r-universe.dev/badges/tidyBdE)](https://ropenspain.r-universe.dev/)
 [![R-CMD-check](https://github.com/rOpenSpain/tidyBdE/actions/workflows/check-full.yaml/badge.svg)](https://github.com/rOpenSpain/tidyBdE/actions/workflows/check-full.yaml)
-[![codecov](https://codecov.io/gh/ropenspain/tidyBdE/branch/main/graph/badge.svg)](https://codecov.io/gh/ropenspain/tidyBdE)
+[![codecov](https://codecov.io/gh/ropenspain/tidyBdE/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropenspain/tidyBdE)
 [![DOI](https://img.shields.io/badge/DOI-10.5281/zenodo.4673496-blue)](https://doi.org/10.5281/zenodo.4673496)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -82,9 +82,9 @@ XR_GBP %>%
   knitr::kable()
 ```
 
-| Numero\_secuencial | Descripcion\_de\_la\_serie                                         |
-|-------------------:|:-------------------------------------------------------------------|
-|             573214 | Tipo de cambio. Libras esterlinas por euro (GBP/EUR).Datos diarios |
+| Numero_secuencial | Descripcion_de_la_serie                                            |
+|------------------:|:-------------------------------------------------------------------|
+|            573214 | Tipo de cambio. Libras esterlinas por euro (GBP/EUR).Datos diarios |
 
 **Note that BdE files are only provided in Spanish, for the time
 being**, the organism is working on the English version. By now, search
@@ -114,7 +114,7 @@ bde_series_load(seq_number, extract_metadata = TRUE) %>%
 |:----------------------------|:-------------------------------------------------------------------|
 | NOMBRE DE LA SERIE          | DTCCBCEGBPEUR.B                                                    |
 | NÚMERO SECUENCIAL           | 573214                                                             |
-| ALIAS DE LA SERIE           | TC\_1\_1.4                                                         |
+| ALIAS DE LA SERIE           | TC_1\_1.4                                                          |
 | DESCRIPCIÓN DE LA SERIE     | Tipo de cambio. Libras esterlinas por euro (GBP/EUR).Datos diarios |
 | DESCRIPCIÓN DE LAS UNIDADES | Libras esterlinas por Euro                                         |
 | FRECUENCIA                  | LABORABLE                                                          |
@@ -319,23 +319,20 @@ España.
 
 ## Citation
 
-``` r
-citation("tidyBdE")
-#> 
-#> To cite the 'tidyBdE' package in publications use:
-#> 
-#> H. Herrero D (2021). _tidyBdE: Download Data from Bank of Spain_. doi:
-#> 10.5281/zenodo.4673496 (URL: https://doi.org/10.5281/zenodo.4673496), R
-#> package version 0.2.1, <URL: https://ropenspain.github.io/tidyBdE/>.
-#> 
-#> A BibTeX entry for LaTeX users is
-#> 
-#>   @Manual{,
-#>     title = {tidyBdE: Download Data from Bank of Spain},
-#>     author = {Diego {H. Herrero}},
-#>     year = {2021},
-#>     note = {R package version 0.2.1},
-#>     url = {https://ropenspain.github.io/tidyBdE/},
-#>     doi = {10.5281/zenodo.4673496},
-#>   }
-```
+To cite the ‘tidyBdE’ package in publications use:
+
+H. Herrero D (2021). *tidyBdE: Download Data from Bank of Spain*. doi:
+10.5281/zenodo.4673496 (URL: <https://doi.org/10.5281/zenodo.4673496>),
+R package version 0.2.2, \<URL:
+<https://ropenspain.github.io/tidyBdE/>\>.
+
+A BibTeX entry for LaTeX users is
+
+    #> @Manual{,
+    #>   title = {tidyBdE: Download Data from Bank of Spain},
+    #>   author = {Diego {H. Herrero}},
+    #>   year = {2021},
+    #>   note = {R package version 0.2.2},
+    #>   url = {https://ropenspain.github.io/tidyBdE/},
+    #>   doi = {10.5281/zenodo.4673496},
+    #> }
