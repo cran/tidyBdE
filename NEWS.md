@@ -1,3 +1,11 @@
+# tidyBdE 0.2.3
+
+-   The followings catalogs has been deprecated on the API, package updated
+    accordingly:
+
+    -   **CF**: Financial Accounts of the Spanish Economy.
+    -   **IE**: Economic Indicators
+
 # tidyBdE 0.2.2
 
 -   BdE starts migrating "Indicadores Económicos" (Economic Indicators) series
