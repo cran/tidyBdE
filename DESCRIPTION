@@ -1,6 +1,6 @@
 Package: tidyBdE
 Title: Download Data from Bank of Spain
-Version: 0.2.3
+Version: 0.2.4
 Authors@R: 
     person("Diego", "H. Herrero", , "dev.dieghernan@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-8457-4658", affiliation = "rOpenSpain"))
@@ -27,9 +27,9 @@ RoxygenNote: 7.1.2
 X-schema.org-applicationCategory: Macroeconomics
 X-schema.org-isPartOf: https://ropenspain.es/
 NeedsCompilation: no
-Packaged: 2022-01-19 15:46:19 UTC; diego
+Packaged: 2022-02-23 14:40:21 UTC; diego
 Author: Diego H. Herrero [aut, cre, cph]
     (<https://orcid.org/0000-0001-8457-4658>, rOpenSpain)
 Maintainer: Diego H. Herrero <dev.dieghernan@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-01-19 16:20:02 UTC
+Date/Publication: 2022-02-23 15:40:02 UTC

@@ -1,3 +1,7 @@
+# tidyBdE 0.2.4
+
+-   Update series code on `bde_ind_cpi_var()`.
+
 # tidyBdE 0.2.3
 
 -   The followings catalogs has been deprecated on the API, package updated
