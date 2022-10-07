@@ -134,7 +134,7 @@ ggplot(time_series, aes(x = Date, y = EUR_GBP_XR)) +
     label = "Brexit"
   )) +
   coord_cartesian(ylim = c(0.7, 1)) +
-  theme_bde()
+  theme_tidybde()
 ```
 
 <img src="man/figures/README-chart-1.png" width="100%" />
@@ -161,7 +161,7 @@ ggplot(plotseries, aes(x = Date, y = values)) +
     subtitle = "%",
     caption = "Source: BdE"
   ) +
-  theme_bde() +
+  theme_tidybde() +
   scale_color_bde_d(palette = "bde_vivid_pal") # Custom palette on the package
 ```
 
@@ -246,7 +246,7 @@ A BibTeX entry for LaTeX users is
       doi = {10.5281/zenodo.4673496},
       author = {Diego {H. Herrero}},
       year = {2022},
-      version = {0.2.5},
+      version = {0.3.0},
       url = {https://ropenspain.github.io/tidyBdE/},
       abstract = {Tools to download data series from Banco de España (BdE) on tibble format. Banco de España is the national central bank and, within the framework of the Single Supervisory Mechanism (SSM), the supervisor of the Spanish banking system along with the European Central Bank. This package is in no way sponsored endorsed or administered by Banco de España.},
     }
