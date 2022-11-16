@@ -1,3 +1,11 @@
+# tidyBdE 0.3.1
+
+-   Add new dependency: **tidyr**.
+
+-   New parameter `out_format` on `bde_series_load()`.
+
+-  Use best practices and small adjustments on `theme_tidybde()`.
+
 # tidyBdE 0.3.0
 
 -   Overall improvements on downloading files:
