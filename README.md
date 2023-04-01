@@ -7,7 +7,7 @@
 
 [![rOS-badge](https://ropenspain.github.io/rostemplate/reference/figures/ropenspain-badge.svg)](https://ropenspain.es/)
 [![CRAN-status](https://www.r-pkg.org/badges/version/tidyBdE)](https://CRAN.R-project.org/package=tidyBdE)
-[![CRAN-results](https://cranchecks.info/badges/worst/tidyBdE)](https://cran.r-project.org/web/checks/check_results_tidyBdE.html)
+[![CRAN-results](https://badges.cranchecks.info/worst/tidyBdE.svg)](https://cran.r-project.org/web/checks/check_results_tidyBdE.html)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/tidyBdE?color=blue)](https://cran.r-project.org/package=tidyBdE)
 [![On-CRAN](https://www.r-pkg.org/badges/ago/tidyBdE)](https://cran.r-project.org/web/checks/check_results_tidyBdE.html)
 [![r-universe](https://ropenspain.r-universe.dev/badges/tidyBdE)](https://ropenspain.r-universe.dev/)
@@ -44,10 +44,9 @@ install_github("ropenspain/tidyBdE")
 ```
 
 Alternatively, you can install the developing version of **tidyBdE**
-using the [r-universe](https://ropenspain.r-universe.dev/ui#builds):
+using the [r-universe](https://ropenspain.r-universe.dev/tidyBdE):
 
 ``` r
-
 # Enable this universe
 options(repos = c(
   ropenspain = "https://ropenspain.r-universe.dev",
@@ -68,11 +67,12 @@ The basic entry point for searching time-series are the catalogs
 (*indexes*) of information. You can search any series by name:
 
 ``` r
-
 library(tidyBdE)
 
 # Load tidyverse for better handling
-library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
 
 
 # Search GBP on "TC" (exchange rate) catalog
@@ -97,8 +97,6 @@ exchange rate using the sequential number reference
 (`Numero_Secuencial`) as:
 
 ``` r
-
-
 seq_number <- XR_GBP %>%
   # First record
   slice(1) %>%
@@ -119,7 +117,6 @@ The package also provides a custom `ggplot2` theme based on the
 publications of BdE:
 
 ``` r
-
 ggplot(time_series, aes(x = Date, y = EUR_GBP_XR)) +
   geom_line(colour = bde_vivid_pal()(1)) +
   geom_smooth(method = "gam", colour = bde_vivid_pal()(2)[2]) +
@@ -148,19 +145,17 @@ of the most relevant macroeconomic series, so there is no need to look
 for them in advance:
 
 ``` r
+# Data in "long" format
 
-gdp <- bde_ind_gdp_var("values")
-gdp$label <- "GDP YoY"
-
-UnempRate <- bde_ind_unemployment_rate("values")
-UnempRate$label <- "Unemployment Rate"
-
-plotseries <- bind_rows(gdp, UnempRate) %>%
+plotseries <- bde_ind_gdp_var("GDP YoY", out_format = "long") %>%
+  bind_rows(
+    bde_ind_unemployment_rate("Unemployment Rate", out_format = "long")
+  ) %>%
   drop_na() %>%
   filter(Date >= "2010-01-01" & Date <= "2019-12-31")
 
-ggplot(plotseries, aes(x = Date, y = values)) +
-  geom_line(aes(color = label)) +
+ggplot(plotseries, aes(x = Date, y = serie_value)) +
+  geom_line(aes(color = serie_name), linewidth = 1) +
   labs(
     title = "Spanish Economic Indicators (2010-2019)",
     subtitle = "%",
@@ -178,8 +173,6 @@ Two custom palettes, based on the used by BdE on some publications are
 available.
 
 ``` r
-
-
 scales::show_col(bde_rose_pal()(6))
 ```
 
@@ -242,7 +235,7 @@ España.
 
 To cite ‘tidyBdE’ in publications use:
 
-H. Herrero, D (2022). tidyBdE: Download Data from Bank of Spain.
+H. Herrero, D (2023). tidyBdE: Download Data from Bank of Spain.
 <https://doi.org/10.5281/zenodo.4673496>,
 <https://ropenspain.github.io/tidyBdE/>
 
@@ -252,8 +245,8 @@ A BibTeX entry for LaTeX users is
       title = {{tidyBdE}: Download Data from Bank of Spain},
       doi = {10.5281/zenodo.4673496},
       author = {Diego {H. Herrero}},
-      year = {2022},
-      version = {0.3.1},
+      year = {2023},
+      version = {0.3.2},
       url = {https://ropenspain.github.io/tidyBdE/},
       abstract = {Tools to download data series from Banco de España (BdE) on tibble format. Banco de España is the national central bank and, within the framework of the Single Supervisory Mechanism (SSM), the supervisor of the Spanish banking system along with the European Central Bank. This package is in no way sponsored endorsed or administered by Banco de España.},
     }
