@@ -1,6 +1,6 @@
 #' BdE `ggplot2` theme
 #'
-#' A custom `ggplot2` theme based on the publications of BdE.
+#' A custom \CRANpkg{ggplot2} theme based on the publications of BdE.
 #'
 #' @family bde_plot
 #'
@@ -38,7 +38,7 @@
 #'   names(series_TC_pivot) <- c("x", "y")
 #'
 #'   ggplot(series_TC_pivot, aes(x = x, y = y)) +
-#'     geom_line(linewidth = 0.8, color = bde_vivid_pal()(1)) +
+#'     geom_line(linewidth = 0.8, color = bde_tidy_palettes(n = 1)) +
 #'     labs(
 #'       title = "Title",
 #'       subtitle = "Some metric",

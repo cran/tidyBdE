@@ -3,6 +3,7 @@ BdE
 CMD
 CatastRo
 Catastro
+CodeFactor
 DOI
 Datos
 Descripcion
@@ -38,7 +39,6 @@ del
 diarios
 electrónica
 esterlinas
-fiel
 geospatial
 halfyear
 hcl
@@ -51,6 +51,5 @@ rect
 secuencial
 serie
 tibble
-tidyBdE’
 tidyr
 tidyverse

@@ -7,6 +7,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+<!-- tidyBdE.Rmd is generated from tidyBdE.Rmd.orig. Please edit that file -->
+
 
 
 **tidyBdE** is an API package that helps to retrieve data from [Banco de
@@ -84,8 +86,8 @@ BdE:
 
 ```r
 ggplot(time_series, aes(x = Date, y = EUR_GBP_XR)) +
-  geom_line(colour = bde_vivid_pal()(1)) +
-  geom_smooth(method = "gam", colour = bde_vivid_pal()(2)[2]) +
+  geom_line(colour = bde_tidy_palettes(n = 1)) +
+  geom_smooth(method = "gam", colour = bde_tidy_palettes(n = 2)[2]) +
   labs(
     title = "EUR/GBP Exchange Rate (2010-2020)",
     subtitle = "%",
@@ -105,8 +107,8 @@ ggplot(time_series, aes(x = Date, y = EUR_GBP_XR)) +
 ```
 
 <div class="figure">
-<img src="./chart-1.png" alt="EUR/GBP Exchange Rate (2010-2020) via tidyBdE" width="100%" />
-<p class="caption">EUR/GBP Exchange Rate (2010-2020) via tidyBdE</p>
+<img src="./chart-1.png" alt="EUR/GBP Exchange Rate (2010-2020)" width="100%" />
+<p class="caption">EUR/GBP Exchange Rate (2010-2020)</p>
 </div>
 
 The package provides also several "shortcut" functions for a selection of the

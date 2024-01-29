@@ -3,39 +3,92 @@
 \name{scales_bde}
 \alias{scales_bde}
 \alias{scale_color_bde_d}
+\alias{scale_colour_bde_d}
 \alias{scale_fill_bde_d}
 \alias{scale_color_bde_c}
+\alias{scale_colour_bde_c}
 \alias{scale_fill_bde_c}
-\title{BdE scales for \code{ggplot2}.}
+\title{BdE scales for \CRANpkg{ggplot2}.}
 \usage{
-scale_color_bde_d(palette = c("bde_vivid_pal", "bde_rose_pal"), ...)
+scale_color_bde_d(
+  palette = c("bde_vivid_pal", "bde_rose_pal", "bde_qual_pal"),
+  alpha = NULL,
+  rev = FALSE,
+  ...
+)
 
-scale_fill_bde_d(palette = c("bde_vivid_pal", "bde_rose_pal"), ...)
+scale_fill_bde_d(
+  palette = c("bde_vivid_pal", "bde_rose_pal", "bde_qual_pal"),
+  alpha = NULL,
+  rev = FALSE,
+  ...
+)
 
-scale_color_bde_c(palette = c("bde_vivid_pal", "bde_rose_pal"), ...)
+scale_color_bde_c(
+  palette = c("bde_rose_pal", "bde_vivid_pal", "bde_qual_pal"),
+  alpha = NULL,
+  rev = FALSE,
+  ...
+)
 
-scale_fill_bde_c(palette = c("bde_vivid_pal", "bde_rose_pal"), ...)
+scale_fill_bde_c(
+  palette = c("bde_rose_pal", "bde_vivid_pal", "bde_qual_pal"),
+  alpha = NULL,
+  rev = FALSE,
+  ...
+)
 }
 \arguments{
-\item{palette}{Name of the BdE palette to apply. One of "bde_vivid_pal",
-"bde_rose_pal". See \code{\link[=bde_pals]{bde_pals()}} for details.}
+\item{palette}{Name of the BdE palette to apply. See \code{\link[=bde_tidy_palettes]{bde_tidy_palettes()}}
+for details.}
+
+\item{alpha}{An alpha-transparency level in the range \verb{[0,1]} (\code{0} means
+transparent and \code{1} means opaque). A missing, i.e., \code{alpha = NULL}, does
+not add opacity codes (\code{"FF"}) to the individual color hex codes. See
+\code{\link[ggplot2:reexports]{ggplot2::alpha()}}.}
+
+\item{rev}{Logical indicating whether the ordering of the colors should be
+reversed.}
 
 \item{...}{Further arguments of \code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale()}} or
 \code{\link[ggplot2:continuous_scale]{ggplot2::continuous_scale()}}.}
 }
 \value{
-A \code{ggplot2} color scale.
+A \CRANpkg{ggplot2} color scale.
 }
 \description{
-Scales to be used with the \code{ggplot2} package. Discrete palettes are named
-as \verb{scale_*_bde_d} while continuous palettes are named \verb{scale_*_bde_c}.
+Scales to be used with the \CRANpkg{ggplot2} package. Discrete palettes are
+named as \verb{scale_*_bde_d} while continuous palettes are named \verb{scale_*_bde_c}.
+}
+\examples{
+library(ggplot2)
+
+set.seed(596)
+txsamp <- subset(
+  txhousing,
+  city \%in\% c(
+    "Houston", "Fort Worth",
+    "San Antonio", "Dallas", "Austin"
+  )
+)
+
+ggplot(txsamp, aes(x = sales, y = median)) +
+  geom_point(aes(colour = city)) +
+  scale_color_bde_d() +
+  theme_minimal()
+
+
+ggplot(txsamp, aes(x = sales, y = median)) +
+  geom_point(aes(colour = city)) +
+  scale_color_bde_d("bde_qual_pal") +
+  theme_minimal()
+
 }
 \seealso{
-\code{\link[=bde_vivid_pal]{bde_vivid_pal()}}, \code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale()}},
-\code{\link[ggplot2:continuous_scale]{ggplot2::continuous_scale()}}
+\code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale()}}, \code{\link[ggplot2:continuous_scale]{ggplot2::continuous_scale()}}
 
 Other bde_plot: 
-\code{\link{bde_pals}},
+\code{\link{bde_tidy_palettes}()},
 \code{\link{theme_tidybde}()}
 }
 \concept{bde_plot}

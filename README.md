@@ -13,6 +13,7 @@
 [![r-universe](https://ropenspain.r-universe.dev/badges/tidyBdE)](https://ropenspain.r-universe.dev/tidyBdE)
 [![R-CMD-check](https://github.com/rOpenSpain/tidyBdE/actions/workflows/check-full.yaml/badge.svg)](https://github.com/rOpenSpain/tidyBdE/actions/workflows/check-full.yaml)
 [![codecov](https://codecov.io/gh/ropenspain/tidyBdE/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropenspain/tidyBdE)
+[![CodeFactor](https://www.codefactor.io/repository/github/ropenspain/tidybde/badge)](https://www.codefactor.io/repository/github/ropenspain/tidybde)
 [![DOI](https://img.shields.io/badge/DOI-10.5281/zenodo.4673496-blue)](https://doi.org/10.5281/zenodo.4673496)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -47,16 +48,11 @@ Alternatively, you can install the developing version of **tidyBdE**
 using the [r-universe](https://ropenspain.r-universe.dev/tidyBdE):
 
 ``` r
-# Enable this universe
-options(repos = c(
-  ropenspain = "https://ropenspain.r-universe.dev",
-  CRAN = "https://cloud.r-project.org"
+# Install tidyBdE in R:
+install.packages("tidyBdE", repos = c(
+  "https://ropenspain.r-universe.dev",
+  "https://cloud.r-project.org"
 ))
-
-# Install tidyBdE
-install.packages("tidyBdE",
-  repos = c("https://ropenspain.r-universe.dev", "https://cloud.r-project.org")
-)
 ```
 
 ## Examples
@@ -120,8 +116,8 @@ publications of BdE:
 
 ``` r
 ggplot(time_series, aes(x = Date, y = EUR_GBP_XR)) +
-  geom_line(colour = bde_vivid_pal()(1)) +
-  geom_smooth(method = "gam", colour = bde_vivid_pal()(2)[2]) +
+  geom_line(colour = bde_tidy_palettes(n = 1)) +
+  geom_smooth(method = "gam", colour = bde_tidy_palettes(n = 2)[2]) +
   labs(
     title = "EUR/GBP Exchange Rate (2010-2020)",
     subtitle = "%",
@@ -174,19 +170,6 @@ ggplot(plotseries, aes(x = Date, y = serie_value)) +
 Two custom palettes, based on the used by BdE on some publications are
 available.
 
-``` r
-scales::show_col(bde_rose_pal()(6))
-```
-
-<img src="man/figures/README-palettes-1.png" width="100%" />
-
-``` r
-
-scales::show_col(bde_vivid_pal()(6))
-```
-
-<img src="man/figures/README-palettes-2.png" width="100%" />
-
 Those palettes can be applied to a `ggplot2` using some custom utils
 included on the package (see
 `help("scale_color_bde_d", package = "tidyBdE")`).
@@ -235,11 +218,11 @@ España.
 
 ## Citation
 
-To cite ‘tidyBdE’ in publications use:
-
-H. Herrero, D (2023). tidyBdE: Download Data from Bank of Spain.
-<https://doi.org/10.5281/zenodo.4673496>,
-<https://ropenspain.github.io/tidyBdE/>
+<p>
+H. Herrero D (2024). <em>tidyBdE: Download Data from Bank of Spain</em>.
+<a href="https://doi.org/10.5281/zenodo.4673496">doi:10.5281/zenodo.4673496</a>,
+<a href="https://ropenspain.github.io/tidyBdE/">https://ropenspain.github.io/tidyBdE/</a>.
+</p>
 
 A BibTeX entry for LaTeX users is
 
@@ -247,8 +230,8 @@ A BibTeX entry for LaTeX users is
       title = {{tidyBdE}: Download Data from Bank of Spain},
       doi = {10.5281/zenodo.4673496},
       author = {Diego {H. Herrero}},
-      year = {2023},
-      version = {0.3.4},
+      year = {2024},
+      version = {0.3.5},
       url = {https://ropenspain.github.io/tidyBdE/},
       abstract = {Tools to download data series from Banco de España (BdE) on tibble format. Banco de España is the national central bank and, within the framework of the Single Supervisory Mechanism (SSM), the supervisor of the Spanish banking system along with the European Central Bank. This package is in no way sponsored endorsed or administered by Banco de España.},
     }

@@ -20,7 +20,7 @@ theme_tidybde(...)
 A \code{\link[ggplot2:ggtheme]{ggplot2::theme_classic()}}.
 }
 \description{
-A custom \code{ggplot2} theme based on the publications of BdE.
+A custom \CRANpkg{ggplot2} theme based on the publications of BdE.
 }
 \details{
 Theme based on \code{\link[ggplot2:ggtheme]{ggplot2::theme_classic()}}.
@@ -47,7 +47,7 @@ if (nrow(series_TC) > 0) {
   names(series_TC_pivot) <- c("x", "y")
 
   ggplot(series_TC_pivot, aes(x = x, y = y)) +
-    geom_line(linewidth = 0.8, color = bde_vivid_pal()(1)) +
+    geom_line(linewidth = 0.8, color = bde_tidy_palettes(n = 1)) +
     labs(
       title = "Title",
       subtitle = "Some metric",
@@ -62,7 +62,7 @@ if (nrow(series_TC) > 0) {
 \code{\link[ggplot2:ggtheme]{ggplot2::theme_classic()}}
 
 Other bde_plot: 
-\code{\link{bde_pals}},
+\code{\link{bde_tidy_palettes}()},
 \code{\link{scales_bde}}
 }
 \concept{bde_plot}
