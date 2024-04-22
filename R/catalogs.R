@@ -9,11 +9,18 @@
 #'
 #' @encoding UTF-8
 #'
-#' @return A [tibble][tibble::tibble].
+#' @return A [`tibble`][tibble::tibble] object.
 #'
 #' @source
-#' [Time-series bulk data
-#' download](https://www.bde.es/webbe/en/estadisticas/recursos/descargas-completas.html)
+#'
+#' ```{r, echo=FALSE, results='asis'}
+#'
+#' cat(paste0("[Time-series bulk data download]",
+#'       "(https://www.bde.es/webbe/en/estadisticas/recursos/",
+#'       "descargas-completas.html)."))
+#'
+#'
+#' ```
 #'
 #' @param catalog A single value indicating the catalogs to be updated
 #'   or `"ALL"` as a shorthand. See **Details**.
@@ -33,11 +40,11 @@
 #'
 #' t <- tibble::tribble(
 #' ~CODE, ~PUBLICATION, ~UPDATEFREQUENCY, ~FREQUENCY,
-#' "**BE**", "Statistical Bulletin", "Daily", "Monthly",
-#' "**SI**", "Summary Indicators", "Daily", "Daily",
-#' "**TC**", "Exchange Rates", "Daily", "Daily",
-#' "**TI**", "Interest Rates", "Daily", "Daily",
-#' "**PB**", "Bank Lending Survey", "Quarterly", "Quarterly",
+#' '`"BE"`', "Statistical Bulletin", "Daily", "Monthly",
+#' '`"SI"`', "Summary Indicators", "Daily", "Daily",
+#' '`"TC"`', "Exchange Rates", "Daily", "Daily",
+#' '`"TI"`', "Interest Rates", "Daily", "Daily",
+#' '`"PB"`', "Bank Lending Survey", "Quarterly", "Quarterly",
 #' )
 #'
 #' names(t) <- paste0("**",
@@ -194,8 +201,15 @@ bde_catalog_load <- function(catalog = c("ALL", "BE", "SI", "TC", "TI", "PB"),
 #' @return None. Downloads the catalog file(s) to the local machine.
 #'
 #' @source
-#' [Time-series bulk data
-#' download](https://www.bde.es/webbe/en/estadisticas/recursos/descargas-completas.html)
+#'
+#' ```{r, echo=FALSE, results='asis'}
+#'
+#' cat(paste0("[Time-series bulk data download]",
+#'       "(https://www.bde.es/webbe/en/estadisticas/recursos/",
+#'       "descargas-completas.html)."))
+#'
+#'
+#' ```
 #'
 #' @param catalog A vector of characters indicating the catalogs to be updated
 #'   or `"ALL"` as a shorthand. See **Details**.
@@ -211,11 +225,11 @@ bde_catalog_load <- function(catalog = c("ALL", "BE", "SI", "TC", "TI", "PB"),
 #'
 #' t <- tibble::tribble(
 #' ~CODE, ~PUBLICATION, ~UPDATEFREQUENCY, ~FREQUENCY,
-#' "**BE**", "Statistical Bulletin", "Daily", "Monthly",
-#' "**SI**", "Summary Indicators", "Daily", "Daily",
-#' "**TC**", "Exchange Rates", "Daily", "Daily",
-#' "**TI**", "Interest Rates", "Daily", "Daily",
-#' "**PB**", "Bank Lending Survey", "Quarterly", "Quarterly",
+#' '`"BE"`', "Statistical Bulletin", "Daily", "Monthly",
+#' '`"SI"`', "Summary Indicators", "Daily", "Daily",
+#' '`"TC"`', "Exchange Rates", "Daily", "Daily",
+#' '`"TI"`', "Interest Rates", "Daily", "Daily",
+#' '`"PB"`', "Bank Lending Survey", "Quarterly", "Quarterly",
 #' )
 #'
 #' names(t) <- paste0("**",
@@ -301,7 +315,7 @@ bde_catalog_update <- function(catalog = c("ALL", "BE", "SI", "TC", "TI", "PB"),
 #'
 #' @family  catalog
 #'
-#' @return A [tibble][tibble::tibble] with the results of the query.
+#' @return A [`tibble`][tibble::tibble] object with the results of the query.
 #'
 #' @param pattern [`regex`][base::regex]  pattern to search See **Details**
 #'   and **Examples**.

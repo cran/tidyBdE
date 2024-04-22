@@ -12,6 +12,7 @@
 [![On-CRAN](https://www.r-pkg.org/badges/ago/tidyBdE)](https://cran.r-project.org/web/checks/check_results_tidyBdE.html)
 [![r-universe](https://ropenspain.r-universe.dev/badges/tidyBdE)](https://ropenspain.r-universe.dev/tidyBdE)
 [![R-CMD-check](https://github.com/rOpenSpain/tidyBdE/actions/workflows/check-full.yaml/badge.svg)](https://github.com/rOpenSpain/tidyBdE/actions/workflows/check-full.yaml)
+[![R-hub](https://github.com/rOpenSpain/tidyBdE/actions/workflows/rhub.yaml/badge.svg)](https://github.com/rOpenSpain/tidyBdE/actions/workflows/rhub.yaml)
 [![codecov](https://codecov.io/gh/ropenspain/tidyBdE/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropenspain/tidyBdE)
 [![CodeFactor](https://www.codefactor.io/repository/github/ropenspain/tidybde/badge)](https://www.codefactor.io/repository/github/ropenspain/tidybde)
 [![DOI](https://img.shields.io/badge/DOI-10.5281/zenodo.4673496-blue)](https://doi.org/10.5281/zenodo.4673496)
@@ -23,8 +24,8 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 
 **tidyBdE** is an API package that helps to retrieve data from [Banco de
 España](https://www.bde.es/webbe/en/estadisticas/recursos/descargas-completas.html).
-The data is provided as [tibble](https://tibble.tidyverse.org/) and the
-package tries to guess the format of every time-series (dates,
+The data is returned as a [`tibble`](https://tibble.tidyverse.org/) and
+the package tries to guess the format of every time-series (dates,
 characters and numbers).
 
 ## Installation
@@ -39,9 +40,7 @@ install.packages("tidyBdE")
 You can install the developing version of **tidyBdE** with:
 
 ``` r
-library(remotes)
-
-install_github("ropenspain/tidyBdE")
+remotes::install_github("ropenspain/tidyBdE")
 ```
 
 Alternatively, you can install the developing version of **tidyBdE**
@@ -111,7 +110,7 @@ time_series <- bde_series_load(seq_number, series_label = "EUR_GBP_XR") %>%
 
 ### Plots
 
-The package also provides a custom `ggplot2` theme based on the
+The package also provides a custom **ggplot2** theme based on the
 publications of BdE:
 
 ``` r
@@ -231,7 +230,7 @@ A BibTeX entry for LaTeX users is
       doi = {10.5281/zenodo.4673496},
       author = {Diego {H. Herrero}},
       year = {2024},
-      version = {0.3.5},
+      version = {0.3.6},
       url = {https://ropenspain.github.io/tidyBdE/},
       abstract = {Tools to download data series from Banco de España (BdE) on tibble format. Banco de España is the national central bank and, within the framework of the Single Supervisory Mechanism (SSM), the supervisor of the Spanish banking system along with the European Central Bank. This package is in no way sponsored endorsed or administered by Banco de España.},
     }
