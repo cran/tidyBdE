@@ -205,7 +205,8 @@ España.
 ## Citation
 
 <p>
-H. Herrero D (2024). <em>tidyBdE: Download Data from Bank of Spain</em>.
+
+H. Herrero D (2025). <em>tidyBdE: Download Data from Bank of Spain</em>.
 <a href="https://doi.org/10.32614/CRAN.package.tidyBdE">doi:10.32614/CRAN.package.tidyBdE</a>,
 <a href="https://ropenspain.github.io/tidyBdE/">https://ropenspain.github.io/tidyBdE/</a>.
 </p>
@@ -216,8 +217,8 @@ A BibTeX entry for LaTeX users is
       title = {{tidyBdE}: Download Data from Bank of Spain},
       doi = {10.32614/CRAN.package.tidyBdE},
       author = {Diego {H. Herrero}},
-      year = {2024},
-      version = {0.3.8},
+      year = {2025},
+      version = {0.4.0},
       url = {https://ropenspain.github.io/tidyBdE/},
       abstract = {Tools to download data series from Banco de España (BdE) on tibble format. Banco de España is the national central bank and, within the framework of the Single Supervisory Mechanism (SSM), the supervisor of the Spanish banking system along with the European Central Bank. This package is in no way sponsored endorsed or administered by Banco de España.},
     }
