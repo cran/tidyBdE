@@ -3,7 +3,7 @@
 #' @description
 #'
 #' Scales to be used with the \CRANpkg{ggplot2} package. Discrete palettes are
-#' named as `scale_*_bde_d` while continuous palettes are named `scale_*_bde_c`.
+#' named `scale_*_bde_d`, while continuous palettes are named `scale_*_bde_c`.
 #'
 #' @seealso [ggplot2::discrete_scale()], [ggplot2::continuous_scale()]
 #'
@@ -50,8 +50,11 @@
 #'   theme_minimal()
 #'
 scale_color_bde_d <- function(
-    palette = c("bde_vivid_pal", "bde_rose_pal", "bde_qual_pal"), alpha = NULL,
-    rev = FALSE, ...) {
+  palette = c("bde_vivid_pal", "bde_rose_pal", "bde_qual_pal"),
+  alpha = NULL,
+  rev = FALSE,
+  ...
+) {
   palette <- match.arg(palette)
 
   cols_v <- bde_tidy_palettes(palette = palette, alpha = alpha, rev = rev)
@@ -70,8 +73,11 @@ scale_colour_bde_d <- scale_color_bde_d
 #' @name scales_bde
 #' @export
 scale_fill_bde_d <- function(
-    palette = c("bde_vivid_pal", "bde_rose_pal", "bde_qual_pal"), alpha = NULL,
-    rev = FALSE, ...) {
+  palette = c("bde_vivid_pal", "bde_rose_pal", "bde_qual_pal"),
+  alpha = NULL,
+  rev = FALSE,
+  ...
+) {
   palette <- match.arg(palette)
 
   cols_v <- bde_tidy_palettes(palette = palette, alpha = alpha, rev = rev)
@@ -85,20 +91,30 @@ scale_fill_bde_d <- function(
 #' @name scales_bde
 #' @export
 scale_color_bde_c <- function(
-    palette = c("bde_rose_pal", "bde_vivid_pal", "bde_qual_pal"), alpha = NULL,
-    rev = FALSE, guide = "colorbar", ...) {
+  palette = c("bde_rose_pal", "bde_vivid_pal", "bde_qual_pal"),
+  alpha = NULL,
+  rev = FALSE,
+  guide = "colorbar",
+  ...
+) {
   palette <- match.arg(palette)
 
-
   cols <- switch(palette,
-    "bde_vivid_pal" = bde_tidy_palettes(6, "bde_vivid_pal",
+    "bde_vivid_pal" = bde_tidy_palettes(
+      6,
+      "bde_vivid_pal",
       alpha = alpha,
       rev = rev
     ),
-    "bde_qual_pal" = bde_tidy_palettes(6, "bde_qual_pal",
-      alpha = alpha, rev = rev
+    "bde_qual_pal" = bde_tidy_palettes(
+      6,
+      "bde_qual_pal",
+      alpha = alpha,
+      rev = rev
     ),
-    "bde_rose_pal" = bde_tidy_palettes(6, "bde_rose_pal",
+    "bde_rose_pal" = bde_tidy_palettes(
+      6,
+      "bde_rose_pal",
       alpha = alpha,
       rev = rev
     )[c(1, 2, 3, 6, 5, 4)]
@@ -121,21 +137,30 @@ scale_colour_bde_c <- scale_color_bde_c
 #' @name scales_bde
 #' @export
 scale_fill_bde_c <- function(
-    palette = c("bde_rose_pal", "bde_vivid_pal", "bde_qual_pal"), alpha = NULL,
-    rev = FALSE, guide = "colorbar", ...) {
+  palette = c("bde_rose_pal", "bde_vivid_pal", "bde_qual_pal"),
+  alpha = NULL,
+  rev = FALSE,
+  guide = "colorbar",
+  ...
+) {
   palette <- match.arg(palette)
 
-
   cols <- switch(palette,
-    "bde_vivid_pal" = bde_tidy_palettes(6, "bde_vivid_pal",
+    "bde_vivid_pal" = bde_tidy_palettes(
+      6,
+      "bde_vivid_pal",
       alpha = alpha,
       rev = rev
     ),
-    "bde_qual_pal" = bde_tidy_palettes(6, "bde_qual_pal",
+    "bde_qual_pal" = bde_tidy_palettes(
+      6,
+      "bde_qual_pal",
       alpha = alpha,
       rev = rev
     ),
-    "bde_rose_pal" = bde_tidy_palettes(6, "bde_rose_pal",
+    "bde_rose_pal" = bde_tidy_palettes(
+      6,
+      "bde_rose_pal",
       alpha = alpha,
       rev = rev
     )[c(1, 2, 3, 6, 5, 4)]
@@ -144,6 +169,7 @@ scale_fill_bde_c <- function(
   ggplot2::continuous_scale(
     aesthetics = "fill",
     palette = scales::gradient_n_pal(cols),
-    guide = guide, ...
+    guide = guide,
+    ...
   )
 }

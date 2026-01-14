@@ -1,7 +1,5 @@
 test_that("Test error", {
-  expect_snapshot(bde_tidy_palettes(palette = "none"),
-    error = TRUE
-  )
+  expect_snapshot(bde_tidy_palettes(palette = "none"), error = TRUE)
 })
 
 
@@ -23,7 +21,6 @@ test_that("Switch pal", {
   expect_false(any(ok == other2))
   expect_false(any(other == other2))
 })
-
 
 
 test_that("test n", {

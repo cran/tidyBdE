@@ -1,12 +1,14 @@
 #' BdE \CRANpkg{ggplot2} theme
 #'
-#' A custom \CRANpkg{ggplot2} theme based on the publications of BdE.
+#' A custom \CRANpkg{ggplot2} theme based on the publications
+#' of BdE.
 #'
 #' @family bde_plot
 #'
 #' @export
 #'
-#' @return A \CRANpkg{ggplot2} [`theme()`][ggplot2::theme_classic()].
+#' @return A \CRANpkg{ggplot2}
+#'   [`theme()`][ggplot2::theme_classic()].
 #'
 #' @inheritDotParams ggplot2::theme_classic
 #'
@@ -29,7 +31,7 @@
 #' if (nrow(series_TC) > 0) {
 #'   series_TC <- series_TC[c(1, 2)]
 #'
-#'   series_TC_pivot <- series_TC %>%
+#'   series_TC_pivot <- series_TC |>
 #'     filter(
 #'       Date >= "2020-01-01" & Date <= "2020-12-31",
 #'       !is.na(series_TC[[2]])
@@ -57,17 +59,20 @@ theme_tidybde <- function(...) {
       plot.margin = unit(rep(5.5, 4) * 3, "pt"),
       plot.title = element_text(
         margin = margin(b = 4),
-        hjust = 0, vjust = 1,
+        hjust = 0,
+        vjust = 1,
         size = rel(1.1)
       ),
       plot.subtitle = element_text(
-        hjust = 0, vjust = 1,
+        hjust = 0,
+        vjust = 1,
         size = rel(0.9),
         margin = margin(t = 4, b = 4)
       ),
       plot.caption = element_text(
-        hjust = 1, vjust = 0,
-        size = rel(.75)
+        hjust = 1,
+        vjust = 0,
+        size = rel(0.75)
       ),
       panel.background = element_rect(fill = "white", colour = NA),
       panel.grid.major.y = element_line(
@@ -78,21 +83,21 @@ theme_tidybde <- function(...) {
       axis.ticks.length = unit(-2.75, "pt"),
       axis.text.x.bottom = element_text(
         margin = margin(t = 7.5, b = 5, unit = "pt"),
-        size = rel(.9)
+        size = rel(0.9)
       ),
       axis.text.x.top = element_text(
         margin = margin(b = 7.5, t = 5, unit = "pt"),
-        size = rel(.9)
+        size = rel(0.9)
       ),
       axis.text.y.left = element_text(
         hjust = 1,
         margin = margin(r = 7.5, l = 5, unit = "pt"),
-        size = rel(.9)
+        size = rel(0.9)
       ),
       axis.text.y.right = element_text(
         hjust = 0,
         margin = margin(l = 7.5, r = 5, unit = "pt"),
-        size = rel(.9)
+        size = rel(0.9)
       ),
       legend.position = "bottom",
       legend.justification = c(0, 0),

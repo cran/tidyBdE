@@ -12,21 +12,27 @@ theme_tidybde(...)
   \describe{
     \item{\code{base_size}}{base font size, given in pts.}
     \item{\code{base_family}}{base font family}
+    \item{\code{header_family}}{font family for titles and headers. The default, \code{NULL},
+uses theme inheritance to set the font. This setting affects axis titles,
+legend titles, the plot title and tag text.}
     \item{\code{base_line_size}}{base size for line elements}
     \item{\code{base_rect_size}}{base size for rect elements}
+    \item{\code{ink,paper,accent}}{colour for foreground, background, and accented elements respectively.}
   }}
 }
 \value{
-A \CRANpkg{ggplot2} \code{\link[ggplot2:ggtheme]{theme()}}.
+A \CRANpkg{ggplot2}
+\code{\link[ggplot2:ggtheme]{theme()}}.
 }
 \description{
-A custom \CRANpkg{ggplot2} theme based on the publications of BdE.
+A custom \CRANpkg{ggplot2} theme based on the publications
+of BdE.
 }
 \details{
 Theme based on \code{\link[ggplot2:ggtheme]{ggplot2::theme_classic()}}.
 }
 \examples{
-\dontshow{if (bde_check_access()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (bde_check_access()) withAutoprint(\{ # examplesIf}
 \donttest{
 library(ggplot2)
 library(dplyr)
@@ -38,7 +44,7 @@ series_TC <- bde_series_full_load("TC_1_1.csv")
 if (nrow(series_TC) > 0) {
   series_TC <- series_TC[c(1, 2)]
 
-  series_TC_pivot <- series_TC \%>\%
+  series_TC_pivot <- series_TC |>
     filter(
       Date >= "2020-01-01" & Date <= "2020-12-31",
       !is.na(series_TC[[2]])
