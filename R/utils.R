@@ -13,9 +13,8 @@
 #' @param dates_to_parse Dates to parse
 #'
 #' @description
-#' This function is tailored for the date formatting used in this package,
-#' so it may fail if used with other datasets. See **Examples** for
-#' checking which formats would be considered.
+#' This function is tailored for date formats used in this package and may fail
+#' with other datasets. See **Examples** for formats that are supported.
 #'
 #' ## Date Formats
 #'
@@ -26,7 +25,7 @@
 #'   "**Daily / Business day**", "DD MMMMYYYY", "*02 FEB2019*",
 #'   "**Monthly**", "MMM YYYY", "*MAR 2020*",
 #'   "**Quarterly**", paste(
-#'     "MMM YYYY, where MMM is the first ",
+#'     "MMM YYYY, where MMM is the first",
 #'     "or the last month of the",
 #'     "quarter, depending on the value of",
 #'     "its variable OBSERVED."

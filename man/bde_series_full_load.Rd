@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \name{bde_series_full_load}
 \alias{bde_series_full_load}
-\title{Load BdE full time-series files}
+\title{Load BdE full time series files}
 \usage{
 bde_series_full_load(
   series_csv,
@@ -20,7 +20,7 @@ bde_series_full_load(
 \verb{Nombre del archivo con los valores de la serie} of the corresponding
 catalog. See \code{\link[=bde_catalog_load]{bde_catalog_load()}}.}
 
-\item{parse_dates}{Logical. If \code{TRUE}, the dates will be parsed using
+\item{parse_dates}{Logical. If \code{TRUE}, dates are parsed using
 \code{\link[=bde_parse_dates]{bde_parse_dates()}}.}
 
 \item{parse_numeric}{Logical. If \code{TRUE} the columns would be parsed to
@@ -29,8 +29,8 @@ double (numeric) values. See \strong{Note}.}
 \item{cache_dir}{A path to a cache directory. The directory can also be set
 via options with \code{options(bde_cache_dir = "path/to/dir")}.}
 
-\item{update_cache}{Logical. If \code{TRUE}, the requested file will be updated
-in the \code{cache_dir}.}
+\item{update_cache}{Logical. If \code{TRUE}, the requested file is updated in
+\code{cache_dir}.}
 
 \item{verbose}{Logical \code{TRUE} or \code{FALSE}, display information useful for
 debugging.}
@@ -43,7 +43,7 @@ A \link[tibble:tbl_df-class]{tibble} with a field \code{Date} and the alias of t
 series as described on the catalogs. See \code{\link[=bde_catalog_load]{bde_catalog_load()}}.
 }
 \description{
-Load a full time-series file provided by BdE.
+Load a full time series file provided by BdE.
 }
 \details{
 \subsection{About BdE file naming}{
@@ -54,7 +54,7 @@ Statistical Bulletin ("BE"). Although it is a unique value, it is subject
 to change (i.e. a new table is inserted before).
 
 For that reason, the function \code{\link[=bde_series_load]{bde_series_load()}} is more suitable for
-extracting specific time-series.
+extracting specific time series.
 }
 }
 \note{

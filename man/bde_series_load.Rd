@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \name{bde_series_load}
 \alias{bde_series_load}
-\title{Load a single BdE time-series}
+\title{Load a single BdE time series}
 \usage{
 bde_series_load(
   series_code,
@@ -19,7 +19,7 @@ bde_series_load(
 }
 \arguments{
 \item{series_code}{A numeric value (or coercible with \code{\link[base:double]{base::as.double()}})
-or vector of time-series code(s), as defined in the field
+or vector of time series code(s), as defined in the field
 \verb{Número secuencial} of the corresponding series. See \code{\link[=bde_catalog_load]{bde_catalog_load()}}.}
 
 \item{series_label}{Optional. Character vector or value. Allows specifying a
@@ -29,7 +29,7 @@ custom label for the series extracted.}
 Possible values are \code{"wide"} or \code{"long"}. See \strong{Value} for details and
 section \strong{Examples}.}
 
-\item{parse_dates}{Logical. If \code{TRUE}, the dates will be parsed using
+\item{parse_dates}{Logical. If \code{TRUE}, dates are parsed using
 \code{\link[=bde_parse_dates]{bde_parse_dates()}}.}
 
 \item{parse_numeric}{Logical. If \code{TRUE} the columns would be parsed to
@@ -38,8 +38,8 @@ double (numeric) values. See \strong{Note}.}
 \item{cache_dir}{A path to a cache directory. The directory can also be set
 via options with \code{options(bde_cache_dir = "path/to/dir")}.}
 
-\item{update_cache}{Logical. If \code{TRUE}, the requested file will be updated
-in the \code{cache_dir}.}
+\item{update_cache}{Logical. If \code{TRUE}, the requested file is updated in
+\code{cache_dir}.}
 
 \item{verbose}{Logical \code{TRUE} or \code{FALSE}, display information useful for
 debugging.}
@@ -78,7 +78,7 @@ several aliases. If you need to search by alias, use
 \code{\link[=bde_series_full_load]{bde_series_full_load()}}.
 }
 \details{
-Load a single time-series provided by BdE.
+Load a single time series provided by BdE.
 }
 \note{
 This function attempts to coerce the columns to numbers. For some series, a
@@ -106,7 +106,6 @@ wide <- bde_series_load(c(573234, 573214),
 # Wide format
 wide
 
-
 # Long format
 long <- bde_series_load(c(573234, 573214),
   series_label = c("US/EUR", "GBP/EUR"),
@@ -115,10 +114,8 @@ long <- bde_series_load(c(573234, 573214),
 
 long
 
-
 # Use with ggplot
 library(ggplot2)
-
 
 ggplot(long, aes(Date, serie_value)) +
   geom_line(aes(group = serie_name, color = serie_name)) +

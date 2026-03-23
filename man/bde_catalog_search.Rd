@@ -14,12 +14,12 @@ and \strong{Examples}.}
 \item{...}{
   Arguments passed on to \code{\link[=bde_catalog_load]{bde_catalog_load}}
   \describe{
-    \item{\code{catalog}}{A single value indicating the catalogs to be updated or
+    \item{\code{catalog}}{A single value indicating the catalog to be updated or
 \code{"ALL"} as a shorthand. See \strong{Details}.}
-    \item{\code{parse_dates}}{Logical. If \code{TRUE}, the dates will be parsed using
+    \item{\code{parse_dates}}{Logical. If \code{TRUE}, dates are parsed using
 \code{\link[=bde_parse_dates]{bde_parse_dates()}}.}
-    \item{\code{update_cache}}{Logical. If \code{TRUE}, the requested file will be updated
-in the \code{cache_dir}.}
+    \item{\code{update_cache}}{Logical. If \code{TRUE}, the requested file is updated in
+\code{cache_dir}.}
     \item{\code{cache_dir}}{A path to a cache directory. The directory can also be set
 via options with \code{options(bde_cache_dir = "path/to/dir")}.}
     \item{\code{verbose}}{Logical \code{TRUE} or \code{FALSE}, display information useful for
@@ -30,7 +30,7 @@ debugging.}
 A \link[tibble:tbl_df-class]{tibble} object with the results of the query.
 }
 \description{
-Search for keywords on the time-series catalogs.
+Search for keywords on the time series catalogs.
 }
 \details{
 \strong{Note:} BdE files are currently provided only in Spanish. Therefore, search

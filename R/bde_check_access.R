@@ -1,7 +1,7 @@
 #' Check access to BdE
 #'
 #' @description
-#' Check if **R** can access resources at
+#' Check whether **R** can access resources at
 #' <https://www.bde.es/webbe/en/estadisticas/recursos/descargas-completas.html>.
 #'
 #' @return A logical value.
@@ -30,7 +30,7 @@ bde_check_access <- function() {
   # nocov start
   access <-
     tryCatch(
-      download.file(url, destfile = tempfile(), quiet = TRUE),
+      download.file(url, destfile = tempfile(), quiet = TRUE, mode = "wb"),
       warning = function(e) {
         FALSE
       }

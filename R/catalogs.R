@@ -1,7 +1,7 @@
 #' Load BdE catalogs
 #'
 #' @description
-#' Load the time-series catalogs provided by the BdE.
+#' Load the time series catalogs provided by the BdE.
 #'
 #' @export
 #'
@@ -15,21 +15,20 @@
 #'
 #' ```{r, echo=FALSE, results='asis'}
 #'
-#' cat(paste0("[Time-series bulk data download]",
+#' cat(paste0("[time series bulk data download]",
 #'       "(https://www.bde.es/webbe/en/estadisticas/recursos/",
 #'       "descargas-completas.html)."))
 #'
-#'
 #' ```
 #'
-#' @param catalog A single value indicating the catalogs to be updated or
+#' @param catalog A single value indicating the catalog to be updated or
 #'   `"ALL"` as a shorthand. See **Details**.
 #'
-#' @param parse_dates Logical. If `TRUE`, the dates will be parsed using
-#'  [bde_parse_dates()].
+#' @param parse_dates Logical. If `TRUE`, dates are parsed using
+#'   [bde_parse_dates()].
 #'
-#' @param update_cache Logical. If `TRUE`, the requested file will be updated
-#'   in the `cache_dir`.
+#' @param update_cache Logical. If `TRUE`, the requested file is updated in
+#'   `cache_dir`.
 #'
 #' @inheritParams bde_catalog_update
 #'
@@ -55,7 +54,7 @@
 #' ```
 #' Use `"ALL"` as a shorthand for updating all the catalogs at a glance.
 #'
-#' If the requested catalog is not cached [bde_catalog_update()] is invoked.
+#' If the requested catalog is not cached, [bde_catalog_update()] is invoked.
 #'
 #' @examplesIf bde_check_access()
 #' \donttest{
@@ -182,7 +181,7 @@ bde_catalog_load <- function(
   # To tibble
   final_catalog <- tibble::as_tibble(final_catalog)
 
-  # Parse dates dates
+  # Parse dates
   if (parse_dates) {
     if (verbose) {
       message("tidyBdE> Parsing dates")
@@ -205,7 +204,7 @@ bde_catalog_load <- function(
 #' Update BdE catalogs
 #'
 #' @description
-#' Update the time-series catalogs provided by BdE.
+#' Update the time series catalogs provided by BdE.
 #'
 #' @export
 #'
@@ -219,14 +218,13 @@ bde_catalog_load <- function(
 #'
 #' ```{r, echo=FALSE, results='asis'}
 #'
-#' cat(paste0("[Time-series bulk data download]",
+#' cat(paste0("[time series bulk data download]",
 #'       "(https://www.bde.es/webbe/en/estadisticas/recursos/",
 #'       "descargas-completas.html)."))
 #'
-#'
 #' ```
 #'
-#' @param catalog A vector of characters indicating the catalogs to be updated
+#' @param catalog A character string indicating the catalog to be updated
 #'   or `"ALL"` as a shorthand. See **Details**.
 #' @param cache_dir A path to a cache directory. The directory can also be set
 #'   via options with `options(bde_cache_dir = "path/to/dir")`.
@@ -323,11 +321,11 @@ bde_catalog_update <- function(
 #' Search BdE catalogs
 #'
 #' @description
-#' Search for keywords on the time-series catalogs.
+#' Search for keywords on the time series catalogs.
 #'
 #' @export
 #'
-#' @family  catalog
+#' @family catalog
 #'
 #' @return A [tibble][tibble::tbl_df] object with the results of the query.
 #'
@@ -381,7 +379,7 @@ bde_catalog_search <- function(pattern, ...) {
   col_ind <- c(2, 3, 4, 5, 15)
 
   search_match_rows <- NULL
-  # Loop thorugh cols
+  # Loop through cols
   for (i in col_ind) {
     search_match_rows <- unique(
       c(
