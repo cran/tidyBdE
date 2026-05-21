@@ -1,22 +1,23 @@
-#' Parse dates
+#' Parse dates from strings
 #'
-#' Tries to parse strings representing dates using [as.Date()]
+#' Parse strings representing dates with [as.Date()].
 #'
 #' @export
+#' @encoding UTF-8
 #'
 #' @family utils
 #'
-#' @return A [`Date`][as.Date()] object.
+#' @return A vector of [`Date`][as.Date()] values.
 #'
 #' @seealso [as.Date()]
 #'
-#' @param dates_to_parse Dates to parse
+#' @param dates_to_parse Character vector of dates to parse.
 #'
 #' @description
-#' This function is tailored for date formats used in this package and may fail
+#' This function is tailored to date formats used in this package and may fail
 #' with other datasets. See **Examples** for formats that are supported.
 #'
-#' ## Date Formats
+#' ## Date formats
 #'
 #' ```{r, echo=FALSE}
 #'
@@ -33,7 +34,7 @@
 #'   "For the first quarter of 2020: *ENE 2020, MAR 2020*",
 #'   "**Half-yearly**", paste(
 #'     "MMM YYYY, where MMM is the first or the last month",
-#'     "of the halfyear period, depending on the value of its",
+#'     "of the half-year period, depending on the value of its",
 #'     "variable OBSERVED."
 #'   ),
 #'   "For the first half of 2020: *ENE 2020, JUN 2020*",
@@ -45,7 +46,7 @@
 #' ```
 #'
 #' @examples
-#' # Formats parsed
+#' # Supported formats.
 #' would_parse <- c(
 #'   "02 FEB2019", "15 ABR 1890", "MAR 2020", "ENE2020",
 #'   "2020", "12-1993", "01-02-2014", "01/02/1990"
@@ -57,9 +58,8 @@
 #'
 #' tibble::tibble(raw = would_parse, parsed = parsed_ok)
 #'
-#' #-----------------------------------
+#' # Unsupported formats.
 #'
-#' # Formats not admitted
 #' wont_parse <- c("JAN2001", "2010-01-12", "01 APR 2017", "01/31/1990")
 #'
 #' parsed_fail <- bde_parse_dates(wont_parse)
@@ -87,48 +87,47 @@ bde_parse_dates <- function(dates_to_parse) {
     "DIC"
   )
 
-  # Format months
+  # Map Spanish month names to numbers.
   for (i in seq_along(months_esp)) {
     dateformat <- gsub(months_esp[i], sprintf("%02d", i), dateformat)
   }
 
-  # Final format: dd-mm-yyyy
+  # Normalize the date format to dd-mm-yyyy.
   for (j in seq_along(dateformat)) {
     s2 <- dateformat[j]
 
     if (is.na(s2) || nchar(s2) < 4) {
-      # Return NULL
+      # Return missing values for incomplete dates.
       dateformat[j] <- NA
     } else if (nchar(s2) == 4) {
-      # This is just year, add day, month
+      # If only a year is provided, add month and day.
       dateformat[j] <- paste0("3112", s2)
     } else if (nchar(s2) == 6) {
-      # Month Year, add day
+      # If month and year are provided, add day.
       dateformat[j] <- paste0("01", s2)
     }
   }
 
-  # Convert object
+  # Convert normalized values to dates.
   dateformat <- as.Date(dateformat, "%d%m%Y")
   dateformat
 }
 
-
-#' Creates `cache_dir`
+#' Resolve a cache directory
 #'
-#' @param cache_dir a directory path
-#' @param verbose logical, display parameters
-#' @param suffix a suffix
+#' @param cache_dir Path to a cache directory.
+#' @param verbose Logical indicating whether to display informative messages.
+#' @param suffix An optional suffix to append to the path.
 #'
 #' @noRd
 bde_hlp_cachedir <- function(cache_dir = NULL, verbose = FALSE, suffix = NULL) {
-  # Check cache dir if is null
+  # Resolve the cache directory.
   if (is.null(cache_dir)) {
-    # Check if set via options
+    # Check whether the directory is set via global options.
     cache_dir <- getOption("bde_cache_dir", NULL)
 
     if (is.null(cache_dir)) {
-      # Not set - using tempdir
+      # Fall back to a temporary directory.
       cache_dir <- tempdir()
 
       if (!is.null(suffix)) {
@@ -136,48 +135,52 @@ bde_hlp_cachedir <- function(cache_dir = NULL, verbose = FALSE, suffix = NULL) {
       }
 
       if (verbose) {
-        message("tidyBdE> Caching on temporary directory ", cache_dir)
+        message("tidyBdE> Caching in temporary directory ", cache_dir, ".")
       }
       return(cache_dir)
     } else {
-      # Set via options
+      # Use the cache directory from global options.
       if (verbose) {
-        message("tidyBdE> Cache dir detected on options: ", cache_dir)
+        message(
+          "tidyBdE> Cache directory detected in options: ",
+          cache_dir,
+          "."
+        )
       }
     }
   }
 
-  # When provided
+  # Append the suffix when provided.
   if (!is.null(suffix)) {
     cache_dir <- file.path(gsub(file.path("", suffix), "", cache_dir), suffix)
   }
 
   if (dir.exists(cache_dir)) {
     if (verbose) {
-      message("tidyBdE> Cache dir is ", cache_dir)
+      message("tidyBdE> Cache directory is ", cache_dir, ".")
     }
     return(cache_dir)
   }
 
   dir.create(cache_dir, recursive = TRUE)
   if (verbose) {
-    message("tidyBdE> Cache dir created on ", cache_dir)
+    message("tidyBdE> Cache directory created at ", cache_dir, ".")
   }
   cache_dir
 }
 
-#' Helper for downloading files
+#' Download a file
 #'
-#' @param url resource url
+#' @param url Resource URL.
 #'
-#' @param local_file local file to be created
+#' @param local_file Local file path to create or overwrite.
 #'
-#' @param verbose logical, display parameters and messages
+#' @param verbose Logical indicating whether to display informative messages.
 #'
 #' @noRd
 bde_hlp_download <- function(url, local_file, verbose) {
   if (verbose) {
-    message("tidyBdE> Downloading file from ", url, "\n\n")
+    message("tidyBdE> Downloading file from ", url, ".")
   }
 
   err_dwnload <- tryCatch(
@@ -188,13 +191,12 @@ bde_hlp_download <- function(url, local_file, verbose) {
     }
   )
   # nocov end
-  # Try again if not working
-  # This time display a message
+  # Attempt a second download if the first fails.
 
   # nocov start
   if (isTRUE(err_dwnload)) {
     if (verbose) {
-      message("tidyBdE> Trying again")
+      message("tidyBdE> Trying again.")
     }
 
     err_dwnload <- tryCatch(
@@ -202,10 +204,10 @@ bde_hlp_download <- function(url, local_file, verbose) {
       # nocov start
       warning = function(e) {
         message(
-          "tidyBdE> URL \n ",
+          "tidyBdE> URL ",
           url,
-          "\nnot reachable.\n\n",
-          "If you think this is a bug consider opening an issue"
+          " is not reachable. ",
+          "If you think this is a bug, consider opening an issue."
         )
         TRUE
       }
@@ -213,7 +215,7 @@ bde_hlp_download <- function(url, local_file, verbose) {
   }
   # nocov end
 
-  # On warning stop the execution
+  # Return FALSE if a warning is encountered.
   if (isTRUE(err_dwnload)) {
     return(FALSE)
     # nocov end
@@ -221,21 +223,17 @@ bde_hlp_download <- function(url, local_file, verbose) {
   TRUE
 }
 
-
-#' Guess formats
+#' Infer column types in a tibble
 #'
-#' @param tbl a tibble
-#' @param preserve vector of names to preserve
+#' @param tbl The tibble to process.
+#' @param preserve Vector of names to preserve.
 #' @noRd
 bde_hlp_guess <- function(tbl, preserve = "") {
   for (i in names(tbl)) {
     if (class(tbl[[i]])[1] == "character" && !(i %in% preserve)) {
       tbl[i] <- readr::parse_guess(
         tbl[[i]],
-        locale = readr::locale(
-          grouping_mark = "",
-          decimal_mark = "."
-        ),
+        locale = readr::locale(grouping_mark = "", decimal_mark = "."),
         na = c("_", "...")
       )
     }
@@ -243,11 +241,10 @@ bde_hlp_guess <- function(tbl, preserve = "") {
   tbl
 }
 
-
-#' To chars
+#' Convert columns to character vectors
 #'
-#' @param tbl a tibble
-#' @param preserve vector of names to preserve
+#' @param tbl A tibble.
+#' @param preserve Vector of names to preserve.
 #' @noRd
 bde_hlp_tochar <- function(tbl, preserve = "") {
   for (i in names(tbl)) {
@@ -258,38 +255,33 @@ bde_hlp_tochar <- function(tbl, preserve = "") {
   tbl
 }
 
-
-#' To double
+#' Convert columns to double-precision numbers
 #'
-#' @param tbl a tibble
-#' @param preserve vector of names to preserve
+#' @param tbl A tibble.
+#' @param preserve Vector of names to preserve.
 #' @noRd
 bde_hlp_todouble <- function(tbl, preserve = "") {
   for (i in names(tbl)) {
     if (class(tbl[[i]])[1] == "character" && !(i %in% preserve)) {
-      tbl[i] <-
-        readr::parse_double(
-          tbl[[i]],
-          locale = readr::locale(
-            grouping_mark = "",
-            decimal_mark = "."
-          ),
-          na = c("_", "...")
-        )
+      tbl[i] <- readr::parse_double(
+        tbl[[i]],
+        locale = readr::locale(grouping_mark = "", decimal_mark = "."),
+        na = c("_", "...")
+      )
     }
   }
   tbl
 }
 
-
-#' Return empty tibble
-#' @return a tibble.
+#' Return an empty tibble with an informative message
+#'
+#' @return A [tibble][tibble::tbl_df].
 #'
 #' @examples
 #'
 #' bde_hlp_return_null()
 #' @noRd
-bde_hlp_return_null <- function(msg = "Offline. Returning an empty tibble") {
+bde_hlp_return_null <- function(msg = "Offline. Returning an empty tibble.") {
   # nocov start
   message(paste0("tidyBdE> ", msg))
   tbl <- tibble::tibble(x = NULL)

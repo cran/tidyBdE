@@ -12,46 +12,44 @@ bde_catalog_search(pattern, ...)
 and \strong{Examples}.}
 
 \item{...}{
-  Arguments passed on to \code{\link[=bde_catalog_load]{bde_catalog_load}}
+  Arguments passed on to \code{\link{bde_catalog_load}}
   \describe{
-    \item{\code{catalog}}{A single value indicating the catalog to be updated or
-\code{"ALL"} as a shorthand. See \strong{Details}.}
-    \item{\code{parse_dates}}{Logical. If \code{TRUE}, dates are parsed using
+    \item{\code{catalog}}{A single catalog identifier to load, or \code{"ALL"} to load every
+catalog. See \strong{Details}.}
+    \item{\code{parse_dates}}{Logical. If \code{TRUE}, date columns are parsed with
 \code{\link[=bde_parse_dates]{bde_parse_dates()}}.}
-    \item{\code{update_cache}}{Logical. If \code{TRUE}, the requested file is updated in
+    \item{\code{update_cache}}{Logical. If \code{TRUE}, the requested file is refreshed in
 \code{cache_dir}.}
     \item{\code{cache_dir}}{A path to a cache directory. The directory can also be set
-via options with \code{options(bde_cache_dir = "path/to/dir")}.}
-    \item{\code{verbose}}{Logical \code{TRUE} or \code{FALSE}, display information useful for
-debugging.}
+with options using \code{options(bde_cache_dir = "path/to/dir")}.}
+    \item{\code{verbose}}{Logical. If \code{TRUE}, display information useful for debugging.}
   }}
 }
 \value{
-A \link[tibble:tbl_df-class]{tibble} object with the results of the query.
+A \link[tibble:tbl_df]{tibble} object with the results of the query.
 }
 \description{
-Search for keywords on the time series catalogs.
+Search BdE time series catalog metadata for keywords.
 }
 \details{
-\strong{Note:} BdE files are currently provided only in Spanish. Therefore, search
-terms should be provided in Spanish to obtain search results.
+\strong{Note:} BdE metadata is currently provided in Spanish only. Therefore,
+search terms must be provided in Spanish to retrieve results.
 
-This function uses \code{\link[base:grep]{base::grep()}} function for finding matches on the
-catalogs. You can pass \link[base:regex]{regular expressions} to broaden the
-search.
+This function uses \code{\link[base:grep]{base::grep()}} to find matches in the catalogs. You can
+pass \link[base:regex]{regular expressions} to broaden the search.
 }
 \examples{
 \dontshow{if (bde_check_access()) withAutoprint(\{ # examplesIf}
 \donttest{
-# Simple search (needs to be in Spanish)
-# !! PIB [es] == GDP [en]
+# Simple search. Search terms must be in Spanish.
+# PIB [es] == GDP [en].
 
 bde_catalog_search("PIB")
 
-# More complex - Single
+# Search with a single complex condition.
 bde_catalog_search("Francia(.*)PIB")
 
-# Even more complex - Double
+# Search with multiple complex conditions.
 bde_catalog_search("Francia(.*)PIB|Italia(.*)PIB|Alemania(.*)PIB")
 }
 \dontshow{\}) # examplesIf}
@@ -59,8 +57,8 @@ bde_catalog_search("Francia(.*)PIB|Italia(.*)PIB|Alemania(.*)PIB")
 \seealso{
 \code{\link[=bde_catalog_load]{bde_catalog_load()}}, \link[base:regex]{base::regex}
 
-Other catalog: 
-\code{\link{bde_catalog_load}()},
-\code{\link{bde_catalog_update}()}
+Other catalog:
+\code{\link[=bde_catalog_load]{bde_catalog_load()}},
+\code{\link[=bde_catalog_update]{bde_catalog_update()}}
 }
 \concept{catalog}

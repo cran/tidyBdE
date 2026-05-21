@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \name{bde_catalog_update}
 \alias{bde_catalog_update}
-\title{Update BdE catalogs}
+\title{Update BdE catalog files}
 \source{
 \href{https://www.bde.es/webbe/en/estadisticas/recursos/descargas-completas.html}{time series bulk data download}.
 }
@@ -15,20 +15,19 @@ bde_catalog_update(
 )
 }
 \arguments{
-\item{catalog}{A character string indicating the catalog to be updated
-or \code{"ALL"} as a shorthand. See \strong{Details}.}
+\item{catalog}{A single catalog identifier to update, or \code{"ALL"} to update
+every catalog. See \strong{Details}.}
 
 \item{cache_dir}{A path to a cache directory. The directory can also be set
-via options with \code{options(bde_cache_dir = "path/to/dir")}.}
+with options using \code{options(bde_cache_dir = "path/to/dir")}.}
 
-\item{verbose}{Logical \code{TRUE} or \code{FALSE}, display information useful for
-debugging.}
+\item{verbose}{Logical. If \code{TRUE}, display information useful for debugging.}
 }
 \value{
-None. Downloads the catalog file(s) to the local machine.
+An invisible list of download results.
 }
 \description{
-Update the time series catalogs provided by BdE.
+Update BdE time series catalog files.
 }
 \details{
 Accepted values for \code{catalog} are:\tabular{llll}{
@@ -41,7 +40,7 @@ Accepted values for \code{catalog} are:\tabular{llll}{
 }
 
 
-Use \code{"ALL"} as a shorthand for updating all the catalogs at a glance.
+Use \code{"ALL"} as a shorthand for updating all catalogs at once.
 }
 \examples{
 \dontshow{if (bde_check_access()) withAutoprint(\{ # examplesIf}
@@ -51,8 +50,8 @@ bde_catalog_update("TI", verbose = TRUE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other catalog: 
-\code{\link{bde_catalog_load}()},
-\code{\link{bde_catalog_search}()}
+Other catalog:
+\code{\link[=bde_catalog_load]{bde_catalog_load()}},
+\code{\link[=bde_catalog_search]{bde_catalog_search()}}
 }
 \concept{catalog}

@@ -16,65 +16,64 @@ bde_series_full_load(
 )
 }
 \arguments{
-\item{series_csv}{csv file of a series, as defined in the field
+\item{series_csv}{CSV file of a series, as defined in the field
 \verb{Nombre del archivo con los valores de la serie} of the corresponding
 catalog. See \code{\link[=bde_catalog_load]{bde_catalog_load()}}.}
 
-\item{parse_dates}{Logical. If \code{TRUE}, dates are parsed using
+\item{parse_dates}{Logical. If \code{TRUE}, date columns are parsed with
 \code{\link[=bde_parse_dates]{bde_parse_dates()}}.}
 
-\item{parse_numeric}{Logical. If \code{TRUE} the columns would be parsed to
+\item{parse_numeric}{Logical. If \code{TRUE}, the columns are parsed to
 double (numeric) values. See \strong{Note}.}
 
 \item{cache_dir}{A path to a cache directory. The directory can also be set
-via options with \code{options(bde_cache_dir = "path/to/dir")}.}
+with options using \code{options(bde_cache_dir = "path/to/dir")}.}
 
-\item{update_cache}{Logical. If \code{TRUE}, the requested file is updated in
+\item{update_cache}{Logical. If \code{TRUE}, the requested file is refreshed in
 \code{cache_dir}.}
 
-\item{verbose}{Logical \code{TRUE} or \code{FALSE}, display information useful for
-debugging.}
+\item{verbose}{Logical. If \code{TRUE}, display information useful for debugging.}
 
-\item{extract_metadata}{Logical \code{TRUE/FALSE}. On \code{TRUE} the output is the
-metadata of the requested series.}
+\item{extract_metadata}{Logical. If \code{TRUE}, the output is the metadata of the
+requested series.}
 }
 \value{
-A \link[tibble:tbl_df-class]{tibble} with a field \code{Date} and the alias of the fields
-series as described on the catalogs. See \code{\link[=bde_catalog_load]{bde_catalog_load()}}.
+A \link[tibble:tbl_df]{tibble} with a \code{Date} field and the aliases of the
+series fields as described in the catalogs. See \code{\link[=bde_catalog_load]{bde_catalog_load()}}.
 }
 \description{
-Load a full time series file provided by BdE.
+Load a full BdE time series file.
 }
 \details{
 \subsection{About BdE file naming}{
 
 The series name is a positional code showing the location of the table. For
-example, table \strong{be_6_1} represents the Table 1, Chapter 6 of the
-Statistical Bulletin ("BE"). Although it is a unique value, it is subject
-to change (i.e. a new table is inserted before).
+example, table \strong{be_6_1} represents Table 1, Chapter 6 of the Statistical
+Bulletin ("BE"). Although it is unique, it is subject to change, for
+example when a new table is inserted before it.
 
-For that reason, the function \code{\link[=bde_series_load]{bde_series_load()}} is more suitable for
-extracting specific time series.
+For that reason, \code{\link[=bde_series_load]{bde_series_load()}} is more suitable for extracting
+specific time series.
 }
 }
 \note{
-This function tries to coerce the columns to numbers. For some series a
+This function tries to coerce the columns to numbers. For some series, a
 warning may be displayed if the parser fails. You can override the default
-behavior with \code{parse_numeric = FALSE}
+behavior with \code{parse_numeric = FALSE}.
 }
 \examples{
 \dontshow{if (bde_check_access()) withAutoprint(\{ # examplesIf}
 \donttest{
-# Metadata
+# Show metadata.
 bde_series_full_load("TI_1_1.csv", extract_metadata = TRUE)
 
-# Data
+# Load data.
 bde_series_full_load("TI_1_1.csv")
 }
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other series: 
-\code{\link{bde_series_load}()}
+Other series:
+\code{\link[=bde_series_load]{bde_series_load()}}
 }
 \concept{series}

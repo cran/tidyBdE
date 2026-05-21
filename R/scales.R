@@ -1,8 +1,7 @@
-#' BdE scales for \CRANpkg{ggplot2}
+#' BdE color scales
 #'
 #' @description
-#'
-#' Scales to be used with the \CRANpkg{ggplot2} package. Discrete palettes are
+#' Color scales for the \CRANpkg{ggplot2} package. Discrete scales are
 #' named `scale_*_bde_d`, while continuous palettes are named `scale_*_bde_c`.
 #'
 #' @seealso [ggplot2::discrete_scale()], [ggplot2::continuous_scale()]
@@ -10,20 +9,20 @@
 #' @family bde_plot
 #'
 #' @export
+#' @encoding UTF-8
 #'
-#' @return A \CRANpkg{ggplot2} color scale.
+#' @return A \CRANpkg{ggplot2} scale object.
 #'
 #' @rdname scales_bde
 #'
 #' @name scales_bde
 #'
-#' @param palette Name of the BdE palette to apply. See [bde_tidy_palettes()]
-#'   for details.
+#' @param palette BdE palette to apply. See [bde_tidy_palettes()] for details.
 #'
 #' @inheritParams bde_tidy_palettes
 #' @inheritParams ggplot2::continuous_scale
 #'
-#' @param ... Further arguments of [ggplot2::discrete_scale()] or
+#' @param ... Additional arguments passed to [ggplot2::discrete_scale()] or
 #'   [ggplot2::continuous_scale()].
 #'
 #' @examples
@@ -56,6 +55,7 @@ scale_color_bde_d <- function(
 ) {
   palette <- match.arg(palette)
 
+  # Build the discrete palette.
   cols_v <- bde_tidy_palettes(palette = palette, alpha = alpha, rev = rev)
   pal <- scales::manual_pal(cols_v)
 
@@ -65,12 +65,14 @@ scale_color_bde_d <- function(
 #' @rdname scales_bde
 #' @name scales_bde
 #' @export
+#' @encoding UTF-8
 #' @usage NULL
 scale_colour_bde_d <- scale_color_bde_d
 
 #' @rdname scales_bde
 #' @name scales_bde
 #' @export
+#' @encoding UTF-8
 scale_fill_bde_d <- function(
   palette = c("bde_vivid_pal", "bde_rose_pal", "bde_qual_pal"),
   alpha = NULL,
@@ -79,16 +81,17 @@ scale_fill_bde_d <- function(
 ) {
   palette <- match.arg(palette)
 
+  # Build the discrete palette.
   cols_v <- bde_tidy_palettes(palette = palette, alpha = alpha, rev = rev)
   pal <- scales::manual_pal(cols_v)
 
   ggplot2::discrete_scale(aesthetics = "fill", palette = pal, ...)
 }
 
-
 #' @rdname scales_bde
 #' @name scales_bde
 #' @export
+#' @encoding UTF-8
 scale_color_bde_c <- function(
   palette = c("bde_rose_pal", "bde_vivid_pal", "bde_qual_pal"),
   alpha = NULL,
@@ -98,6 +101,7 @@ scale_color_bde_c <- function(
 ) {
   palette <- match.arg(palette)
 
+  # Define the color ramp for the continuous scale.
   cols <- switch(palette,
     "bde_vivid_pal" = bde_tidy_palettes(
       6,
@@ -129,12 +133,14 @@ scale_color_bde_c <- function(
 #' @rdname scales_bde
 #' @name scales_bde
 #' @export
+#' @encoding UTF-8
 #' @usage NULL
 scale_colour_bde_c <- scale_color_bde_c
 
 #' @rdname scales_bde
 #' @name scales_bde
 #' @export
+#' @encoding UTF-8
 scale_fill_bde_c <- function(
   palette = c("bde_rose_pal", "bde_vivid_pal", "bde_qual_pal"),
   alpha = NULL,
@@ -144,6 +150,7 @@ scale_fill_bde_c <- function(
 ) {
   palette <- match.arg(palette)
 
+  # Define the color ramp for the continuous scale.
   cols <- switch(palette,
     "bde_vivid_pal" = bde_tidy_palettes(
       6,

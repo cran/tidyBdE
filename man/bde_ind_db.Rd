@@ -4,9 +4,9 @@
 \encoding{UTF-8}
 \name{bde_ind_db}
 \alias{bde_ind_db}
-\title{Database of selected macroeconomic indicators}
+\title{Database of selected Spanish macroeconomic indicators}
 \format{
-A \link[tibble:tbl_df-class]{tibble} of 9 rows and
+A \link[tibble:tbl_df]{tibble} of 9 rows and
 7 columns with the following fields:
 
 \describe{
@@ -19,9 +19,9 @@ A \link[tibble:tbl_df-class]{tibble} of 9 rows and
 }
 }
 \description{
-Minimal metadata of the selected macroeconomic indicators included in helper
-functions of \CRANpkg{tidyBdE} (see \link{bde_indicators}). Full metadata can be
-accessed via \code{\link[=bde_catalog_load]{bde_catalog_load()}}
+Minimal metadata for the selected Spanish macroeconomic indicators included
+in the convenience functions of \CRANpkg{tidyBdE} (see \link{bde_indicators}).
+Full metadata can be accessed with \code{\link[=bde_catalog_load]{bde_catalog_load()}}.
 }
 \details{
 \tabular{lllllll}{
@@ -43,7 +43,7 @@ bde_ind_db
 
 }
 \seealso{
-Other indicators: 
+Other indicators:
 \code{\link{bde_indicators}}
 }
 \concept{indicators}

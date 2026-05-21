@@ -1,22 +1,21 @@
-#' BdE \CRANpkg{ggplot2} theme
+#' BdE ggplot2 theme
 #'
-#' A custom \CRANpkg{ggplot2} theme based on the publications
-#' of BdE.
+#' @description
+#' Custom \CRANpkg{ggplot2} theme based on BdE publications.
 #'
 #' @family bde_plot
 #'
 #' @export
+#' @encoding UTF-8
 #'
-#' @return A \CRANpkg{ggplot2}
-#'   [`theme()`][ggplot2::theme_classic()].
+#' @return A \CRANpkg{ggplot2} theme object.
 #'
 #' @inheritDotParams ggplot2::theme_classic
 #'
 #' @seealso [ggplot2::theme_classic()]
 #'
 #' @details
-#'
-#' Theme based on [ggplot2::theme_classic()].
+#' This theme is based on [ggplot2::theme_classic()].
 #'
 #' @importFrom ggplot2 %+replace% rel margin
 #' @examplesIf bde_check_access()
@@ -27,7 +26,7 @@
 #'
 #' series_TC <- bde_series_full_load("TC_1_1.csv")
 #'
-#' # If download was OK then plot
+#' # Plot if the download succeeds.
 #' if (nrow(series_TC) > 0) {
 #'   series_TC <- series_TC[c(1, 2)]
 #'
@@ -69,16 +68,9 @@ theme_tidybde <- function(...) {
         size = rel(0.9),
         margin = margin(t = 4, b = 4)
       ),
-      plot.caption = element_text(
-        hjust = 1,
-        vjust = 0,
-        size = rel(0.75)
-      ),
+      plot.caption = element_text(hjust = 1, vjust = 0, size = rel(0.75)),
       panel.background = element_rect(fill = "white", colour = NA),
-      panel.grid.major.y = element_line(
-        colour = "grey70",
-        linetype = "dashed"
-      ),
+      panel.grid.major.y = element_line(colour = "grey70", linetype = "dashed"),
       axis.title = element_blank(),
       axis.ticks.length = unit(-2.75, "pt"),
       axis.text.x.bottom = element_text(

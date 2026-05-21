@@ -18,67 +18,63 @@ bde_series_load(
 )
 }
 \arguments{
-\item{series_code}{A numeric value (or coercible with \code{\link[base:double]{base::as.double()}})
-or vector of time series code(s), as defined in the field
+\item{series_code}{A numeric value, or one coercible with
+\code{\link[base:as.double]{base::as.double()}}, or a vector of time series codes, as defined in the
+field
 \verb{Número secuencial} of the corresponding series. See \code{\link[=bde_catalog_load]{bde_catalog_load()}}.}
 
-\item{series_label}{Optional. Character vector or value. Allows specifying a
-custom label for the series extracted.}
+\item{series_label}{Optional character string or vector of labels to assign
+to the extracted series.}
 
-\item{out_format}{Whether the format should be returned as "long" or "wide".
-Possible values are \code{"wide"} or \code{"long"}. See \strong{Value} for details and
-section \strong{Examples}.}
+\item{out_format}{The format to return, either \code{"wide"} or \code{"long"}.
+See \strong{Value} for details and the \strong{Examples} section.}
 
-\item{parse_dates}{Logical. If \code{TRUE}, dates are parsed using
+\item{parse_dates}{Logical. If \code{TRUE}, date columns are parsed with
 \code{\link[=bde_parse_dates]{bde_parse_dates()}}.}
 
-\item{parse_numeric}{Logical. If \code{TRUE} the columns would be parsed to
+\item{parse_numeric}{Logical. If \code{TRUE}, the columns are parsed to
 double (numeric) values. See \strong{Note}.}
 
 \item{cache_dir}{A path to a cache directory. The directory can also be set
-via options with \code{options(bde_cache_dir = "path/to/dir")}.}
+with options using \code{options(bde_cache_dir = "path/to/dir")}.}
 
-\item{update_cache}{Logical. If \code{TRUE}, the requested file is updated in
+\item{update_cache}{Logical. If \code{TRUE}, the requested file is refreshed in
 \code{cache_dir}.}
 
-\item{verbose}{Logical \code{TRUE} or \code{FALSE}, display information useful for
-debugging.}
+\item{verbose}{Logical. If \code{TRUE}, display information useful for debugging.}
 
-\item{extract_metadata}{Logical \code{TRUE/FALSE}. On \code{TRUE} the output is the
-metadata of the requested series.}
+\item{extract_metadata}{Logical. If \code{TRUE}, the output is the metadata of the
+requested series.}
 }
 \value{
-A \link[tibble:tbl_df-class]{tibble} with a field \code{Date}:
+A \link[tibble:tbl_df]{tibble} with a \code{Date} column:
 \itemize{
-\item With \code{out_format = "wide"}, each series is presented in a separate
-column with the name defined by \code{series_label}.
+\item With \code{out_format = "wide"}, each series is presented in a separate column
+with the name defined by \code{series_label}.
 \item With \code{out_format = "long"}, the tibble has two additional columns:
-\itemize{
-\item \code{serie_name} with the label of each series.
-\item \code{serie_value} with the corresponding value.
-}
+\code{serie_name}, with the label of each series, and \code{serie_value}, with the
+corresponding value.
 }
 
-\code{"wide"} format is more suitable for exporting to a \code{.csv} file while
-\code{"long"} format is more suitable for creating plots with
+\code{"wide"} format is more suitable for exporting to a \code{.csv} file, while
+\code{"long"} format is more suitable for creating plots using
 \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}. See also \code{\link[tidyr:pivot_longer]{tidyr::pivot_longer()}} and
 \code{\link[tidyr:pivot_wider]{tidyr::pivot_wider()}}.
 }
 \description{
 The series alias is a positional code showing the location (column and/or
-row) of the series in the table. However, although it is unique, it is not a
-good candidate to be used as the series ID, as it is subject to change. If a
-series changes position in the table, its alias will also change.
+row) of the series in the table. Although it is unique, it is not stable
+enough to use as the series ID because it may change when the series moves.
 
-To ensure series can still be identified, even after these changes, they are
-assigned a sequential number (referred to as \code{series_code} in this function).
+To ensure series can still be identified after these changes, they are
+assigned a sequential number, referred to as \code{series_code} in this function.
 
 Note that a single series may appear in different tables, so it can have
 several aliases. If you need to search by alias, use
 \code{\link[=bde_series_full_load]{bde_series_full_load()}}.
 }
 \details{
-Load a single time series provided by BdE.
+Load a single BdE time series.
 }
 \note{
 This function attempts to coerce the columns to numbers. For some series, a
@@ -87,13 +83,13 @@ warning may be displayed if the parsing fails.
 \examples{
 \dontshow{if (bde_check_access()) withAutoprint(\{ # examplesIf}
 \donttest{
-# Metadata
+# Show metadata.
 bde_series_load(573234, verbose = TRUE, extract_metadata = TRUE)
 
-# Data
+# Load data.
 bde_series_load(573234, extract_metadata = FALSE)
 
-# Vectorized
+# Load multiple series.
 bde_series_load(c(573234, 573214),
   series_label = c("US/EUR", "GBP/EUR"),
   extract_metadata = TRUE
@@ -103,10 +99,10 @@ wide <- bde_series_load(c(573234, 573214),
   series_label = c("US/EUR", "GBP/EUR")
 )
 
-# Wide format
+# Show wide output.
 wide
 
-# Long format
+# Show long output.
 long <- bde_series_load(c(573234, 573214),
   series_label = c("US/EUR", "GBP/EUR"),
   out_format = "long"
@@ -114,7 +110,7 @@ long <- bde_series_load(c(573234, 573214),
 
 long
 
-# Use with ggplot
+# Use with `ggplot2`.
 library(ggplot2)
 
 ggplot(long, aes(Date, serie_value)) +
@@ -128,7 +124,7 @@ ggplot(long, aes(Date, serie_value)) +
 \code{\link[=bde_catalog_load]{bde_catalog_load()}},
 \code{\link[=bde_catalog_search]{bde_catalog_search()}}, \code{\link[=bde_indicators]{bde_indicators()}}
 
-Other series: 
-\code{\link{bde_series_full_load}()}
+Other series:
+\code{\link[=bde_series_full_load]{bde_series_full_load()}}
 }
 \concept{series}

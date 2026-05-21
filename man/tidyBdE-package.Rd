@@ -4,11 +4,11 @@
 \name{tidyBdE-package}
 \alias{tidyBdE}
 \alias{tidyBdE-package}
-\title{tidyBdE: Download Data from Bank of Spain}
+\title{tidyBdE: Retrieve Data from 'Banco de España'}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Tools to download data series from 'Banco de España' ('BdE') on 'tibble' format. 'Banco de España' is the national central bank and, within the framework of the Single Supervisory Mechanism ('SSM'), the supervisor of the Spanish banking system along with the European Central Bank. This package is in no way sponsored endorsed or administered by 'Banco de España'.
+Tools for retrieving time series data from 'Banco de España' ('BdE') as 'tibble' objects. 'Banco de España' is the national central bank and, within the framework of the Single Supervisory Mechanism ('SSM'), the supervisor of the Spanish banking system alongside the European Central Bank. This package is not sponsored, endorsed or administered by 'Banco de España'.
 }
 \seealso{
 Useful links:
@@ -21,6 +21,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Diego H. Herrero \email{dev.dieghernan@gmail.com} (\href{https://orcid.org/0000-0001-8457-4658}{ORCID}) [copyright holder]
+
+Authors:
+\itemize{
+  \item Diego H. Herrero \email{dev.dieghernan@gmail.com} (\href{https://orcid.org/0000-0001-8457-4658}{ORCID}) [copyright holder]
+}
 
 }
 \keyword{internal}
