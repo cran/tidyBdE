@@ -1,49 +1,52 @@
 #' Parse dates from strings
 #'
-#' Parse strings representing dates with [as.Date()].
-#'
-#' @export
-#' @encoding UTF-8
-#'
-#' @family utils
-#'
-#' @return A vector of [`Date`][as.Date()] values.
-#'
-#' @seealso [as.Date()]
-#'
-#' @param dates_to_parse Character vector of dates to parse.
-#'
 #' @description
-#' This function is tailored to date formats used in this package and may fail
-#' with other datasets. See **Examples** for formats that are supported.
+#' Parse strings representing dates with [as.Date()]. This function is tailored
+#' to date formats used in this package and may not parse other datasets. See
+#' **Examples** for supported formats.
 #'
+#' @param dates_to_parse A character vector of date strings to parse.
+#'
+#' @details
 #' ## Date formats
 #'
 #' ```{r, echo=FALSE}
 #'
 #' dates <- tibble::tribble(
 #'   ~FREQUENCY, ~FORMAT, ~EXAMPLES,
-#'   "**Daily / Business day**", "DD MMMMYYYY", "*02 FEB2019*",
-#'   "**Monthly**", "MMM YYYY", "*MAR 2020*",
+#'   "**Daily / Business day**", "`DD MMMMYYYY`", "`02 FEB2019`",
+#'   "**Monthly**", "`MMM YYYY`", "`MAR 2020`",
 #'   "**Quarterly**", paste(
-#'     "MMM YYYY, where MMM is the first",
-#'     "or the last month of the",
+#'     "`MMM YYYY`, where `MMM` is the first",
+#'     "or last month of the",
 #'     "quarter, depending on the value of",
-#'     "its variable OBSERVED."
+#'     "the `OBSERVED` variable."
 #'   ),
-#'   "For the first quarter of 2020: *ENE 2020, MAR 2020*",
+#'   "For the first quarter of 2020: `ENE 2020`, `MAR 2020`",
 #'   "**Half-yearly**", paste(
-#'     "MMM YYYY, where MMM is the first or the last month",
+#'     "`MMM YYYY`, where `MMM` is the first or last month",
 #'     "of the half-year period, depending on the value of its",
-#'     "variable OBSERVED."
+#'     "`OBSERVED` variable."
 #'   ),
-#'   "For the first half of 2020: *ENE 2020, JUN 2020*",
-#'   "**Annual**", "YYYY", "*2020*"
+#'   "For the first half of 2020: `ENE 2020`, `JUN 2020`",
+#'   "**Annual**", "`YYYY`", "`2020`"
 #' )
 #' names(dates) <- paste0("**", names(dates), "**")
 #'
 #' knitr::kable(dates)
 #' ```
+#' See `vignette("csv_manual", package = "tidyBdE")` for details.
+#'
+#' @return A vector of [`Date`][as.Date()] values.
+#'
+#' @seealso
+#' - [bde_catalog_load()] and [bde_series_load()] use this parser.
+#' - [as.Date()] provides base R date conversion.
+#'
+#' @concept utils
+#'
+#' @encoding UTF-8
+#' @export
 #'
 #' @examples
 #' # Supported formats.
@@ -116,18 +119,18 @@ bde_parse_dates <- function(dates_to_parse) {
 #' Resolve a cache directory
 #'
 #' @param cache_dir Path to a cache directory.
-#' @param verbose Logical indicating whether to display informative messages.
-#' @param suffix An optional suffix to append to the path.
+#' @param verbose Logical. If `TRUE`, display informative messages.
+#' @param suffix Optional suffix to append to the path.
 #'
 #' @noRd
 bde_hlp_cachedir <- function(cache_dir = NULL, verbose = FALSE, suffix = NULL) {
-  # Resolve the cache directory.
+  # Prefer an explicit cache directory, then an option, then a temp directory.
   if (is.null(cache_dir)) {
-    # Check whether the directory is set via global options.
+    # Respect the global cache option when no directory is supplied.
     cache_dir <- getOption("bde_cache_dir", NULL)
 
     if (is.null(cache_dir)) {
-      # Fall back to a temporary directory.
+      # Keep default caching disposable when no cache is configured.
       cache_dir <- tempdir()
 
       if (!is.null(suffix)) {
@@ -135,36 +138,37 @@ bde_hlp_cachedir <- function(cache_dir = NULL, verbose = FALSE, suffix = NULL) {
       }
 
       if (verbose) {
-        message("tidyBdE> Caching in temporary directory ", cache_dir, ".")
+        cli::cli_alert_info(
+          "Using temporary cache directory {.file {cache_dir}}."
+        )
       }
       return(cache_dir)
     } else {
-      # Use the cache directory from global options.
+      # Report the configured cache location when requested.
       if (verbose) {
-        message(
-          "tidyBdE> Cache directory detected in options: ",
-          cache_dir,
-          "."
-        )
+        cli::cli_alert_info(paste0(
+          "Using cache directory from option {.code bde_cache_dir}: ",
+          "{.file {cache_dir}}."
+        ))
       }
     }
   }
 
-  # Append the suffix when provided.
+  # Keep family-specific series files in a stable subdirectory.
   if (!is.null(suffix)) {
     cache_dir <- file.path(gsub(file.path("", suffix), "", cache_dir), suffix)
   }
 
   if (dir.exists(cache_dir)) {
     if (verbose) {
-      message("tidyBdE> Cache directory is ", cache_dir, ".")
+      cli::cli_alert_success("Using cache directory {.file {cache_dir}}.")
     }
     return(cache_dir)
   }
 
   dir.create(cache_dir, recursive = TRUE)
   if (verbose) {
-    message("tidyBdE> Cache directory created at ", cache_dir, ".")
+    cli::cli_alert_success("Created cache directory {.file {cache_dir}}.")
   }
   cache_dir
 }
@@ -172,61 +176,54 @@ bde_hlp_cachedir <- function(cache_dir = NULL, verbose = FALSE, suffix = NULL) {
 #' Download a file
 #'
 #' @param url Resource URL.
-#'
 #' @param local_file Local file path to create or overwrite.
-#'
-#' @param verbose Logical indicating whether to display informative messages.
+#' @param verbose Logical. If `TRUE`, display informative messages.
+#' @param retry Logical indicating whether to retry once after a failed
+#'   download.
 #'
 #' @noRd
-bde_hlp_download <- function(url, local_file, verbose) {
+bde_hlp_download <- function(url, local_file, verbose, retry = TRUE) {
   if (verbose) {
-    message("tidyBdE> Downloading file from ", url, ".")
+    cli::cli_alert_info("Downloading file from {.url {url}}.")
   }
 
   err_dwnload <- tryCatch(
     download.file(url, local_file, quiet = isFALSE(verbose), mode = "wb"),
-    # nocov start
     warning = function(e) {
       TRUE
     }
   )
-  # nocov end
-  # Attempt a second download if the first fails.
 
-  # nocov start
-  if (isTRUE(err_dwnload)) {
+  # Retry once because intermittent warnings are common for remote files.
+  if (isTRUE(err_dwnload) && isTRUE(retry)) {
     if (verbose) {
-      message("tidyBdE> Trying again.")
+      cli::cli_alert_warning("Download failed; trying again.")
     }
 
     err_dwnload <- tryCatch(
       download.file(url, local_file, quiet = isFALSE(verbose), mode = "wb"),
-      # nocov start
       warning = function(e) {
-        message(
-          "tidyBdE> URL ",
-          url,
-          " is not reachable. ",
-          "If you think this is a bug, consider opening an issue."
-        )
+        cli::cli_alert_warning(paste0(
+          "URL {.url {url}} is not reachable. ",
+          "If this looks like a bug, please open an issue at ",
+          "{.url https://github.com/rOpenSpain/tidyBdE/issues}."
+        ))
         TRUE
       }
     )
   }
-  # nocov end
 
-  # Return FALSE if a warning is encountered.
+  # Signal download failure without raising an error.
   if (isTRUE(err_dwnload)) {
     return(FALSE)
-    # nocov end
   }
   TRUE
 }
 
 #' Infer column types in a tibble
 #'
-#' @param tbl The tibble to process.
-#' @param preserve Vector of names to preserve.
+#' @param tbl A tibble to process.
+#' @param preserve Character vector of column names to preserve.
 #' @noRd
 bde_hlp_guess <- function(tbl, preserve = "") {
   for (i in names(tbl)) {
@@ -243,8 +240,8 @@ bde_hlp_guess <- function(tbl, preserve = "") {
 
 #' Convert columns to character vectors
 #'
-#' @param tbl A tibble.
-#' @param preserve Vector of names to preserve.
+#' @param tbl A tibble to process.
+#' @param preserve Character vector of column names to preserve.
 #' @noRd
 bde_hlp_tochar <- function(tbl, preserve = "") {
   for (i in names(tbl)) {
@@ -257,8 +254,8 @@ bde_hlp_tochar <- function(tbl, preserve = "") {
 
 #' Convert columns to double-precision numbers
 #'
-#' @param tbl A tibble.
-#' @param preserve Vector of names to preserve.
+#' @param tbl A tibble to process.
+#' @param preserve Character vector of column names to preserve.
 #' @noRd
 bde_hlp_todouble <- function(tbl, preserve = "") {
   for (i in names(tbl)) {
@@ -275,16 +272,121 @@ bde_hlp_todouble <- function(tbl, preserve = "") {
 
 #' Return an empty tibble with an informative message
 #'
+#' @param msg Message to display before returning the empty tibble.
+#'
 #' @return A [tibble][tibble::tbl_df].
 #'
-#' @examples
-#'
-#' bde_hlp_return_null()
 #' @noRd
-bde_hlp_return_null <- function(msg = "Offline. Returning an empty tibble.") {
-  # nocov start
-  message(paste0("tidyBdE> ", msg))
+bde_hlp_return_null <- function(
+  msg = "BdE resources are unavailable. Returning an empty {.cls tbl_df}."
+) {
+  cli::cli_alert_info(msg)
   tbl <- tibble::tibble(x = NULL)
   tbl
-  # nocov end
+}
+
+#' Match argument with pretty error message
+#'
+#' @param arg The argument to match.
+#' @param choices The possible choices for the argument.
+#'
+#' @return
+#' The matched argument.
+#'
+#' @noRd
+match_arg_pretty <- function(arg, choices) {
+  arg_name <- as.character(substitute(arg)) # nolint
+
+  if (missing(choices)) {
+    formal_args <- formals(sys.function(sys_par <- sys.parent()))
+    choices <- eval(
+      formal_args[[as.character(substitute(arg))]],
+      envir = sys.frame(sys_par)
+    )
+  }
+  choices <- as.character(choices)
+
+  if (is.null(arg)) {
+    return(choices[1L])
+  }
+
+  arg <- as.character(arg)
+
+  if (identical(arg, choices)) {
+    return(arg[1])
+  }
+
+  if (length(arg) == 1 && arg %in% choices) {
+    return(arg)
+  }
+
+  msg <- paste0(
+    "{.arg {arg_name}} must be {.or {.str {choices}}}, not ",
+    "{.or {.str {arg}}}."
+  )
+
+  hint <- NULL
+  if (length(arg) == 1) {
+    partial_match <- pmatch(arg, choices)[1]
+    if (!is.na(partial_match)) {
+      hint <- paste0("Did you mean {.str ", choices[partial_match], "}?")
+    }
+  }
+
+  cli::cli_abort(c(msg, i = hint), call = NULL)
+}
+
+#' Abort when a condition is not true
+#'
+#' @param ... Named logical conditions. Each name is the error message emitted
+#'   when its condition is not true.
+#' @param .call The call to display in the error message.
+#' @param .envir The environment used to evaluate cli expressions.
+#' @param .frame The throwing context passed to [cli::cli_abort()].
+#'
+#' @returns
+#' `NULL`, invisibly, when every condition is true.
+#'
+#' @noRd
+bde_hlp_abort_if_not <- function(
+  ...,
+  .call = .envir,
+  .envir = parent.frame(),
+  .frame = .envir
+) {
+  checks <- list(...)
+  messages <- names(checks)
+
+  if (length(checks) == 0L) {
+    return(invisible(NULL))
+  }
+
+  if (is.null(messages) || !all(nzchar(messages))) {
+    cli::cli_abort(
+      "Every condition supplied to {.fn gb_abort_if_not} must be named.",
+      call = .call,
+      .envir = .envir,
+      .frame = .frame
+    )
+  }
+
+  passed <- vapply(
+    checks,
+    function(condition) {
+      length(condition) > 0L && isTRUE(all(condition))
+    },
+    logical(1)
+  )
+
+  failed <- which(!passed)
+  if (length(failed) > 0L) {
+    cli::cli_abort(
+      messages[[failed[[1L]]]],
+      call = .call,
+      .envir = .envir,
+      .frame = .frame
+    )
+  }
+
+  invisible(NULL)
 }

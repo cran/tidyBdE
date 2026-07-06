@@ -8,7 +8,7 @@ test_that("Discrete scale", {
   p2 <- p + scale_color_bde_d()
 
   mod <- ggplot2::layer_data(p2)$colour
-  expect_true(!any(init %in% mod))
+  expect_false(any(init %in% mod))
 
   # Renamed
   p3 <- p + scale_colour_bde_d()
@@ -60,7 +60,7 @@ test_that("Continous scale", {
   p2 <- p + scale_color_bde_c()
 
   mod <- ggplot2::layer_data(p2)$colour
-  expect_true(!any(init %in% mod))
+  expect_false(any(init %in% mod))
 
   # Renamed
   p3 <- p + scale_colour_bde_c()
@@ -94,4 +94,11 @@ test_that("Continous scale", {
   colfill2 <- ggplot2::layer_data(pfill2)$fill
 
   expect_identical(mod4, colfill2)
+})
+
+test_that("Errors", {
+  expect_snapshot(error = TRUE, scale_fill_bde_c(alpha = "a"))
+  expect_snapshot(error = TRUE, scale_color_bde_c(guide = TRUE))
+  expect_snapshot(error = TRUE, scale_fill_bde_d(alpha = Inf))
+  expect_snapshot(error = TRUE, scale_color_bde_d(rev = Inf))
 })

@@ -1,23 +1,24 @@
-#' BdE ggplot2 theme
+#' BdE theme for \CRANpkg{ggplot2}
 #'
 #' @description
-#' Custom \CRANpkg{ggplot2} theme based on BdE publications.
-#'
-#' @family bde_plot
-#'
-#' @export
-#' @encoding UTF-8
-#'
-#' @return A \CRANpkg{ggplot2} theme object.
+#' A custom \CRANpkg{ggplot2} theme based on BdE publications.
 #'
 #' @inheritDotParams ggplot2::theme_classic
 #'
-#' @seealso [ggplot2::theme_classic()]
-#'
 #' @details
-#' This theme is based on [ggplot2::theme_classic()].
+#' This theme extends [ggplot2::theme_classic()].
+#'
+#' @return A \CRANpkg{ggplot2} theme object.
+#'
+#' @seealso [ggplot2::theme_classic()] for the base theme extended here.
+#'
+#' @family bde_plot
 #'
 #' @importFrom ggplot2 %+replace% rel margin
+#'
+#' @encoding UTF-8
+#' @export
+#'
 #' @examplesIf bde_check_access()
 #' \donttest{
 #' library(ggplot2)
@@ -43,14 +44,12 @@
 #'     labs(
 #'       title = "Title",
 #'       subtitle = "Some metric",
-#'       caption = "Bank of Spain"
+#'       caption = "Banco de España"
 #'     ) +
 #'     theme_tidybde()
 #' }
 #' }
-#'
 theme_tidybde <- function(...) {
-  # nocov start
   ggplot2::theme_classic(...) %+replace%
     ggplot2::theme(
       line = element_line(linewidth = rel(0.5)),
@@ -99,5 +98,4 @@ theme_tidybde <- function(...) {
       legend.key.width = unit(25, "pt"),
       legend.text = element_text(size = rel(0.9))
     )
-  # nocov end
 }

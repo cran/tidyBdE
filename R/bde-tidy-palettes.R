@@ -4,21 +4,23 @@
 #' Manually defined palettes based on BdE publications. Each palette contains
 #' at most six colors.
 #'
-#' @family bde_plot
+#' @param n The number of colors to return. Must be at least `1`.
+#' @param palette A palette name: `"bde_vivid_pal"`, `"bde_rose_pal"` or
+#'   `"bde_qual_pal"`.
+#' @param alpha Alpha transparency level in the range `[0, 1]`, where `0` is
+#'   transparent and `1` is opaque. If `alpha = NULL`, the function does not
+#'   append opacity codes (`"FF"`) to individual color hex codes. See
+#'   [ggplot2::alpha()].
+#' @param rev Logical. If `TRUE`, reverse the color order.
 #'
 #' @return A character vector of hex color codes.
 #'
-#' @export
-#' @encoding UTF-8
-#' @param n The number of colors (`>= 1`) to return.
-#' @param palette A valid palette name.
-#' @param alpha An alpha transparency level in the range `[0, 1]` (`0` means
-#'   transparent and `1` means opaque). If missing (i.e., `alpha = NULL`), the
-#'   function does not append opacity codes (`"FF"`) to the individual color
-#'   hex codes. See [ggplot2::alpha()].
-#' @param rev Logical indicating whether to reverse the color order.
-#' @examples
+#' @family bde_plot
 #'
+#' @encoding UTF-8
+#' @export
+#'
+#' @examples
 #' # Show the BdE vivid palette.
 #' scales::show_col(bde_tidy_palettes(palette = "bde_vivid_pal"),
 #'   labels = FALSE
@@ -39,7 +41,21 @@ bde_tidy_palettes <- function(
   alpha = NULL,
   rev = FALSE
 ) {
-  palette <- match.arg(palette)
+  # Validate input arguments.
+  bde_hlp_abort_if_not(
+    "{.arg n} must be a {.cls numeric} vector." = is.numeric(n),
+    "{.arg n} must be greater than or equal to {.val 1}." = n >= 1,
+    "{.arg alpha} must be a {.cls numeric} vector or {.val NULL}." = any(
+      is.null(alpha),
+      is.numeric(alpha)
+    ),
+    "{.arg alpha} must contain values between {.val 0} and {.val 1}." = any(
+      is.null(alpha),
+      all(alpha >= 0 & alpha <= 1)
+    ),
+    "{.arg rev} must be a {.cls logical} vector." = is.logical(rev)
+  )
+  palette <- match_arg_pretty(palette)
 
   cols <- switch(palette,
     "bde_vivid_pal" = c(
@@ -70,17 +86,10 @@ bde_tidy_palettes <- function(
 
   n_col <- length(cols)
   if (n > n_col) {
-    message(
-      "tidyBdE> ",
-      palette,
-      " contains ",
-      n_col,
-      " colors. You requested ",
-      n,
-      ". Returning ",
-      n_col,
-      " colors."
-    )
+    cli::cli_alert_warning(paste0(
+      "Palette {.str {palette}} contains {n_col} color{?s}; ",
+      "{.arg n} requested {.val {n}}. Returning all {n_col} color{?s}."
+    ))
 
     n <- n_col
   }

@@ -4,11 +4,11 @@
 \name{tidyBdE-package}
 \alias{tidyBdE}
 \alias{tidyBdE-package}
-\title{tidyBdE: Retrieve Data from 'Banco de España'}
+\title{tidyBdE: Retrieve Time Series Data from 'Banco de España'}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Tools for retrieving time series data from 'Banco de España' ('BdE') as 'tibble' objects. 'Banco de España' is the national central bank and, within the framework of the Single Supervisory Mechanism ('SSM'), the supervisor of the Spanish banking system alongside the European Central Bank. This package is not sponsored, endorsed or administered by 'Banco de España'.
+Tools for retrieving 'Banco de España' ('BdE') time series data as 'tibble' objects from bulk CSV files and the 'Statistics web service (API)'. Bulk CSV functions use stable 'BdE' sequential numbers, while API functions use API series codes. Catalog functions support discovery and local caching. Plotting helpers provide 'ggplot2' palettes, scales and themes. 'Banco de España' is the national central bank and, within the framework of the Single Supervisory Mechanism ('SSM'), the supervisor of the Spanish banking system alongside the European Central Bank. This package is not sponsored, endorsed or administered by 'Banco de España'.
 }
 \seealso{
 Useful links:
@@ -25,6 +25,11 @@ Useful links:
 Authors:
 \itemize{
   \item Diego H. Herrero \email{dev.dieghernan@gmail.com} (\href{https://orcid.org/0000-0001-8457-4658}{ORCID}) [copyright holder]
+}
+
+Other contributors:
+\itemize{
+  \item Banco de España (\href{https://ror.org/02f26yq04}{ROR}) (Data copyright holder) [copyright holder]
 }
 
 }

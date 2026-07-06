@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Structure, metadata fields and date formats used in Banco de España bulk CSV files.">
+
+<title>Banco de España bulk CSV files</title>
+<style>
+
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+width: 0.8em;
+margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+</style>
+</head>
+
+<body>
+
+
+<header id="title-block-header">
+<h1 class="title">Banco de España bulk CSV files</h1>
+
+</header>
+
+
+<p><em>Adaptation of <a href="https://www.bde.es/webbe/en/estadisticas/compartido/docs/manual_archivos_csv_en.pdf" class="uri">https://www.bde.es/webbe/en/estadisticas/compartido/docs/manual_archivos_csv_en.pdf</a></em></p>
+<h2 id="introduction">Introduction</h2>
+<p>This document describes the files containing the time series from statistical tables and charts published on the Banco de España website. It also provides guidance on using these files.</p>
+<p>Data for the full available sample period are provided for each series, along with metadata. This information describes the economic concept represented by each series, its units, source and any notes.</p>
+<p>This information serves a broad audience, but users generally fall into two categories:</p>
+<ol type="1">
+<li>Users who download one or more tables to their computer to process them using a spreadsheet.</li>
+<li>Users or institutions that download all or most of the information, upload it to a database and combine it with other statistical data or their own information.</li>
+</ol>
+<p>The information provided serves both types of users.</p>
+<p>Banco de España organizes statistical charts and tables on its website in two ways: by statistical publication, which is the approach covered here, or by subject, which is the main organization used in the Statistics section. The tables and download URLs are the same in both cases.</p>
+<p>This document focuses on publications and is organized as follows. The second section explains the two types of files released, their format and their content. The third section provides guidance for users who want to process the information with a spreadsheet. The fourth section provides guidance for institutions that want to develop software for automatically uploading the information to a database.</p>
+<p>Because the tables in the subject-based classification are the same as those in the publications, only organized differently, everything mentioned in this manual about bulk CSV files is valid for both.</p>
+<h2 id="time-series-files">Time series files</h2>
+<p>Files containing the time series for each publication table use CSV (comma-separated value) format. Commas separate the fields or values in each line or record.</p>
+<p>The decimal separator is the period <code>&quot;.&quot;</code> and the thousands separator is a blank space.</p>
+<p>Two file types are available based on their content.</p>
+<p><strong>Catalog file</strong></p>
+<p>The catalog file contains a list of all series and metadata on the characteristics of each series included in statistical publications.</p>
+<p>For example, the file for all the Statistical Bulletin series is called <code>catalogo_be.csv</code>.</p>
+<p>The catalog file is updated <strong>daily or quarterly</strong>, depending on the type of publication.</p>
+<p><strong>Example:</strong> Records of the <code>catalogo_be.csv</code> file</p>
+<pre><code>&quot;Alias de la serie&quot;,&quot;Número secuencial&quot;,&quot;Nombre de la serie/Código de la
+serie&quot;,&quot;Nombre del archivo con los valores de la serie&quot;,&quot;Descripción de la
+serie&quot;,&quot;Tipo de variable&quot;,&quot;Código de unidades&quot;,&quot;Exponente&quot;,&quot;Número de
+decimales&quot;,&quot;Descripción de unidades y exponente&quot;,&quot;Frecuencia de la serie&quot;,&quot;Fecha
+de la primera observación&quot;,&quot;Fecha de la última observación&quot;,&quot;Número de
+observaciones&quot;,&quot;Título de la serie&quot;,&quot;Fuente&quot;,&quot;Notas&quot;
+&quot;SI_1_1.1&quot;,3778094,DSPC102016VP30000_ES14A_TSC.T,&quot;SI_1_1.csv&quot;,...
+&quot;SI_1_1.2&quot;,805995,D_1KH90101,&quot;SI_1_1.csv&quot;,...
+&quot;SI_1_1.3&quot;,1832510,D_1KH99500_D09,&quot;SI_1_1.csv&quot;,...</code></pre>
+<p><strong>Table time series files</strong></p>
+<p>These files cover the entire sample period of every series of a table. There is one file for each table.</p>
+<p>These files are <strong>updated daily</strong> whenever data for the corresponding table change.</p>
+<p><strong>Example:</strong> Records of a table file</p>
+<pre><code>&quot;ALIAS DE LA SERIE&quot;,&quot;BE_23_A.1&quot;,&quot;BE_23_A.2&quot;,&quot;BE_23_A.3&quot;,...
+&quot;NÚMERO SECUENCIAL&quot;,3777714,3777708,3777711,...
+&quot;NOMBRE DE LA SERIE/CÓDIGO DE LA SERIE&quot;,...
+&quot;DESCRIPCIÓN DE LA SERIE&quot;,...
+&quot;DESCRIPCIÓN DE LAS UNIDADES&quot;,...
+&quot;FRECUENCIA&quot;,&quot;TRIMESTRAL&quot;,&quot;TRIMESTRAL&quot;,&quot;TRIMESTRAL&quot;,...
+&quot;MAR 1995&quot;,88400,68435,1203,...
+&quot;JUN 1995&quot;,89949,67556,1122,...
+&quot;SEP 1995&quot;,87765,68032,1046,...</code></pre>
+<p><strong>File naming convention</strong></p>
+<p>The names of time series files follow the pattern <code>ppccaaa.csv</code>, where:</p>
+<ul>
+<li><code>pp</code> is the publication code.</li>
+<li><code>cc</code> is the chapter number.</li>
+<li><code>aaa</code> is the table code.</li>
+<li><code>csv</code> is the file extension.</li>
+</ul>
+<p>For example, <code>be0101.csv</code> contains the series of Table 1 in Chapter 1 of the Statistical Bulletin.</p>
+<p>A compressed <code>pp.zip</code> file<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> containing all time series files of a publication is provided for users who wish to download this content. For users interested in downloading all files of a chapter, compressed files following the pattern below are also available: <code>ppcc.zip</code>.</p>
+<p>For example, <code>be01.zip</code> contains all the time series files of Chapter 1 of the Statistical Bulletin.</p>
+<h3 id="content-of-the-catalog-file">Content of the catalog file</h3>
+<p>The catalog file has a line or record for each time series of the tables in the publication. When the same series is included in several tables, the catalog file will have a line for each table in which it appears. Each column or field contains a characteristic of the time series.</p>
+<p><strong>Alias de la serie (series alias)</strong></p>
+<p>The alias shows where a series can be found in the publication. It follows the pattern <code>pp_c_a.o[.f]</code>.</p>
+<p>Where:</p>
+<ul>
+<li><code>pp</code>: publication code.</li>
+<li><code>c</code>: chapter number.</li>
+<li><code>a</code>: table number or code.</li>
+<li><code>o</code>: column number in vertical or double-entry tables, or row number in horizontal tables.</li>
+<li><code>f</code>: row number in double-entry tables.</li>
+</ul>
+<p>Each alias is unique but should not be used as a stable series identifier because it may change whenever a table is reorganized.</p>
+<p><strong>Número secuencial (sequential number)</strong></p>
+<p>Series aliases are positional and may change when tables are reorganized. To ensure that a series can always be identified, it is assigned a sequential number that remains unchanged throughout its lifetime.</p>
+<p><strong>Nombre de la serie/Código de la serie (API series code)</strong></p>
+<p>This field contains the stable API series code used in Banco de España databases. In <strong>tidyBdE</strong>, it is returned as <code>Nombre_de_la_serie</code>. Pass this column to the <code>series_code</code> argument of the Statistics web service (API) functions. It corresponds to the API <code>series_list</code> parameter.</p>
+<p><strong>Nombre del archivo con los valores de la serie (name of the file containing the series values)</strong></p>
+<p>This field gives the name of the table file that contains the series observations.</p>
+<p><strong>Descripción de la serie (series description)</strong></p>
+<p>This field summarizes the economic concept represented by the series. The title field provides additional detail.</p>
+<p><strong>Tipo de variable (variable type)</strong></p>
+<p>This field indicates whether the economic concept represented by the series is a flow, stock, average or annualized rate.</p>
+<table>
+<caption>Explanations of the type of variable in the catalog file.</caption>
+<tbody>
+<tr class="odd">
+<td><strong>Type of variable</strong></td>
+<td><strong>Explanation</strong></td>
+</tr>
+<tr class="even">
+<td>Principio (start)</td>
+<td>Stock at the start of the period</td>
+</tr>
+<tr class="odd">
+<td>Final (end)</td>
+<td>Stock at the end of the period</td>
+</tr>
+<tr class="even">
+<td>Media (average)</td>
+<td>Period average</td>
+</tr>
+<tr class="odd">
+<td>Suma (total)</td>
+<td>Flow during the period</td>
+</tr>
+<tr class="even">
+<td>Anualizado (annualized)</td>
+<td>Annualized variable</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Código de unidades (unit code)</strong></p>
+<p>This field contains a code for the unit in which the series is expressed. The “description of units and exponent” field explains the code.</p>
+<p><strong>Exponente (exponent)</strong></p>
+<p>This field shows the power of ten by which the series values must be multiplied to obtain the units. The meaning of this number is detailed in the “description of units and exponent” field.</p>
+<p><strong>Número de decimales (number of decimals)</strong></p>
+<p>This field shows the precision with which the series is measured.</p>
+<p><strong>Descripción de unidades y exponente (description of units and exponent)</strong></p>
+<p>This field describes the unit and exponent codes.</p>
+<p><strong>Frecuencia (frequency)</strong></p>
+<p>This field reports the highest frequency at which the series appears in the table. For example, if a series appears at monthly and annual frequencies, the file reports its frequency as monthly. Available frequencies are:</p>
+<ul>
+<li>DIARIA (daily).</li>
+<li>LABORABLE (business days).</li>
+<li>MENSUAL (monthly).</li>
+<li>TRIMESTRAL (quarterly).</li>
+<li>SEMESTRAL (half-yearly).</li>
+<li>ANUAL (yearly).</li>
+</ul>
+<p>Note: LABORABLE frequency means Monday to Friday. DIARIA frequency also includes Saturdays and Sundays.</p>
+<p><strong>Fecha de la primera observación (date of first observation)</strong></p>
+<p>This field gives the date of the first observation in the sample period covered by the series file. The date format depends on the series frequency. See <a href="#annex-ii-date-formats">Annex II: Date formats</a> for details.</p>
+<p><strong>Fecha de la última observación (date of last observation)</strong></p>
+<p>This field gives the date of the last observation in the sample period covered by the series file. The date format depends on the series frequency. See <a href="#annex-ii-date-formats">Annex II: Date formats</a> for details.</p>
+<p><strong>Número de observaciones (number of observations)</strong></p>
+<p>This field gives the number of observations in the sample period covered by the series file.</p>
+<p><strong>Título (title)</strong></p>
+<p>This field describes the economic concept measured or represented by the series. It complements the description field and consists of character strings separated by <code>/</code>.</p>
+<p><strong>Fuente (source)</strong></p>
+<p>This field describes the original source of the series and consists of character strings separated by <code>/</code>.</p>
+<p><strong>Notas (notes)</strong></p>
+<p>This field contains general comments on how the series was compiled or on particular observations. It consists of character strings separated by <code>/</code>.</p>
+<h3 id="content-of-files-with-series-values">Content of files with series values</h3>
+<p>Files with series values contain six header lines identifying the series, a line with values for each date of the sample period and, at the end of the file, two lines with the source and notes.</p>
+<p><strong>Header lines</strong></p>
+<p>The six header lines contain:</p>
+<ol type="1">
+<li>Series aliases.</li>
+<li>Sequential numbers.</li>
+<li>API series code.</li>
+<li>Series description.</li>
+<li>Description of units.</li>
+<li>Frequency.</li>
+</ol>
+<p><strong>Value lines</strong></p>
+<p>Each line contains values for one date of the sample period. Values are expressed using the number of decimals specified in the catalog file.</p>
+<p>When data are not available, symbols are used instead of values:</p>
+<ul>
+<li><code>_</code>: The phenomenon in question does not exist.</li>
+<li><code>...</code>: Data are not available.</li>
+</ul>
+<p><strong>Last lines</strong></p>
+<p>The final lines contain:</p>
+<ul>
+<li>Source.</li>
+<li>Notes.</li>
+</ul>
+<h2 id="loading-csv-files">Loading CSV files</h2>
+<p>CSV files are generated using:</p>
+<ul>
+<li>Decimal separator: period (<code>.</code>).</li>
+<li>Thousands separator: none.</li>
+<li>List separator: comma (<code>,</code>).</li>
+</ul>
+<p>If regional settings differ from these conventions, values may not be loaded correctly.</p>
+<p>Catalog metadata can be used to locate series by searching for specific characteristics.</p>
+<p>For example, searching for text in the title field helps identify the file that contains the corresponding series values.</p>
+<h2 id="annex-i-statistical-publications">Annex I: Statistical publications</h2>
+<table>
+<caption>Banco de España statistical publications.</caption>
+<colgroup>
+<col style="width: 7%">
+<col style="width: 28%">
+<col style="width: 23%">
+<col style="width: 39%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Code</td>
+<td>Publication</td>
+<td>Update frequency</td>
+<td>Frequency of the publication</td>
+</tr>
+<tr class="even">
+<td>BE</td>
+<td>Statistical Bulletin</td>
+<td>Daily</td>
+<td>Monthly</td>
+</tr>
+<tr class="odd">
+<td>SI</td>
+<td>Summary Indicators</td>
+<td>Daily</td>
+<td>Daily</td>
+</tr>
+<tr class="even">
+<td>TC</td>
+<td>Exchange Rates</td>
+<td>Daily</td>
+<td>Daily</td>
+</tr>
+<tr class="odd">
+<td>TI</td>
+<td>Interest Rates</td>
+<td>Daily</td>
+<td>Daily</td>
+</tr>
+<tr class="even">
+<td>PB</td>
+<td>Bank Lending Survey</td>
+<td>Quarterly</td>
+<td>Quarterly</td>
+</tr>
+</tbody>
+</table>
+<h2 id="annex-ii-date-formats">Annex II: Date formats</h2>
+<table>
+<caption>Banco de España date formats.</caption>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Frequency</td>
+<td>Format</td>
+<td>Examples</td>
+</tr>
+<tr class="even">
+<td>Daily / Business day</td>
+<td><code>DD MMMMYYYY</code></td>
+<td><code>02 FEB2019</code></td>
+</tr>
+<tr class="odd">
+<td>Monthly</td>
+<td><code>MMM YYYY</code></td>
+<td><code>MAR 2020</code></td>
+</tr>
+<tr class="even">
+<td>Quarterly</td>
+<td><code>MMM YYYY</code>, where <code>MMM</code> is the first or last month of the quarter, depending on the value of the <code>OBSERVED</code> variable</td>
+<td><code>ENE 2020</code> / <code>MAR 2020</code></td>
+</tr>
+<tr class="odd">
+<td>Half-yearly</td>
+<td><code>MMM YYYY</code>, where <code>MMM</code> is the first or last month of the half-year period, depending on the value of its <code>OBSERVED</code> variable</td>
+<td><code>ENE 2020</code> / <code>JUN 2020</code></td>
+</tr>
+<tr class="even">
+<td>Annual</td>
+<td><code>YYYY</code></td>
+<td><code>2020</code></td>
+</tr>
+</tbody>
+</table>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Files are compressed with WinZip.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+
+
+
+
+</body></html>

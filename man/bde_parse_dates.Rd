@@ -8,27 +8,29 @@
 bde_parse_dates(dates_to_parse)
 }
 \arguments{
-\item{dates_to_parse}{Character vector of dates to parse.}
+\item{dates_to_parse}{A character vector of date strings to parse.}
 }
 \value{
 A vector of \code{\link[=as.Date]{Date}} values.
 }
 \description{
-This function is tailored to date formats used in this package and may fail
-with other datasets. See \strong{Examples} for formats that are supported.
-\subsection{Date formats}{\tabular{lll}{
-   \strong{FREQUENCY} \tab \strong{FORMAT} \tab \strong{EXAMPLES} \cr
-   \strong{Daily / Business day} \tab DD MMMMYYYY \tab \emph{02 FEB2019} \cr
-   \strong{Monthly} \tab MMM YYYY \tab \emph{MAR 2020} \cr
-   \strong{Quarterly} \tab MMM YYYY, where MMM is the first or the last month of the quarter, depending on the value of its variable OBSERVED. \tab For the first quarter of 2020: \emph{ENE 2020, MAR 2020} \cr
-   \strong{Half-yearly} \tab MMM YYYY, where MMM is the first or the last month of the half-year period, depending on the value of its variable OBSERVED. \tab For the first half of 2020: \emph{ENE 2020, JUN 2020} \cr
-   \strong{Annual} \tab YYYY \tab \emph{2020} \cr
-}
-
-}
+Parse strings representing dates with \code{\link[=as.Date]{as.Date()}}. This function is tailored
+to date formats used in this package and may not parse other datasets. See
+\strong{Examples} for supported formats.
 }
 \details{
-Parse strings representing dates with \code{\link[=as.Date]{as.Date()}}.
+\subsection{Date formats}{\tabular{lll}{
+   \strong{FREQUENCY} \tab \strong{FORMAT} \tab \strong{EXAMPLES} \cr
+   \strong{Daily / Business day} \tab \verb{DD MMMMYYYY} \tab \verb{02 FEB2019} \cr
+   \strong{Monthly} \tab \verb{MMM YYYY} \tab \verb{MAR 2020} \cr
+   \strong{Quarterly} \tab \verb{MMM YYYY}, where \code{MMM} is the first or last month of the quarter, depending on the value of the \code{OBSERVED} variable. \tab For the first quarter of 2020: \verb{ENE 2020}, \verb{MAR 2020} \cr
+   \strong{Half-yearly} \tab \verb{MMM YYYY}, where \code{MMM} is the first or last month of the half-year period, depending on the value of its \code{OBSERVED} variable. \tab For the first half of 2020: \verb{ENE 2020}, \verb{JUN 2020} \cr
+   \strong{Annual} \tab \code{YYYY} \tab \code{2020} \cr
+}
+
+
+See \code{vignette("csv_manual", package = "tidyBdE")} for details.
+}
 }
 \examples{
 # Supported formats.
@@ -54,6 +56,9 @@ class(parsed_fail)
 tibble::tibble(raw = wont_parse, parsed = parsed_fail)
 }
 \seealso{
-\code{\link[=as.Date]{as.Date()}}
+\itemize{
+\item \code{\link[=bde_catalog_load]{bde_catalog_load()}} and \code{\link[=bde_series_load]{bde_series_load()}} use this parser.
+\item \code{\link[=as.Date]{as.Date()}} provides base R date conversion.
+}
 }
 \concept{utils}
